@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:progetto_camilloni_tiseni_giri/prova.dart';
 
 
 
@@ -10,11 +11,16 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    Catalogo(),
-    Corsi(),
-    Wishlist(),
-    Profilo(),
+    Text("home"),
+    Text("popo"),
+    Text("Home"),
+    Text("Home"),
+    Prova(),
+    //Home(),
+    //Catalogo(),
+    //Corsi(),
+    //Wishlist(),
+    //Profilo(),
   ];
 
   void _onItemTap(int index){
@@ -26,6 +32,7 @@ class _NavState extends State<Nav> {
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('ProgettoFlutter'),
       ),
       body: Center(
