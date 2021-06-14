@@ -1,7 +1,9 @@
+/* Questa classe identifica la bottom navigation bar, nella quale si inseriscono
+le varie destinazioni
+ */
+
 import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/prova.dart';
-
-
 
 class Nav extends StatefulWidget {
   @override

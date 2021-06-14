@@ -35,6 +35,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+/*questa classe è la prima che viene chiamata quando si fa partire l'app e
+  quello che fa è controllare se c'è un utente loggato, se non c'è porta
+  l'utente alla pagina di login, altrimenti lo porta alla home dell'app
+ */
 class AuthenticationWrapper extends StatelessWidget {
   const AuthenticationWrapper({
     Key? key,
@@ -42,7 +47,6 @@ class AuthenticationWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    print("ciao");
     final User? firebaseUser = FirebaseAuth.instance.currentUser;
     if(firebaseUser != null){
       return Nav();
