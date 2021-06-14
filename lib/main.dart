@@ -71,7 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text("Corsi per tutti"),
+        actions: [
+          IconButton(icon:const Icon(Icons.more_vert),
+          onPressed: (){}),
+        ],
+        backgroundColor: Colors.purple,
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -107,7 +112,40 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      bottomNavigationBar:BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Color(0xFF6200EE),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white.withOpacity(.60),
+        selectedFontSize: 14,
+        unselectedFontSize: 14,
+        onTap: (value) {
+          // Respond to item press.
+        },
+        items: [
+          BottomNavigationBarItem(
+            title: Text('Home'),
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Catalogo'),
+            icon: Icon(Icons.menu),
+          ),
+          BottomNavigationBarItem(
+            title: Text('I tuoi Corsi'),
+            icon: Icon(Icons.move_to_inbox_sharp),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Wishlist'),
+            icon: Icon(Icons.favorite),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Utente'),
+            icon: Icon(Icons.person),
+          ),
+        ],
+      )// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
