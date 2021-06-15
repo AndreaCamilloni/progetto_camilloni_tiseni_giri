@@ -6,10 +6,11 @@ class YourCourses extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return GridView.count(
-        primary: false,
+        padding: EdgeInsets.all(20.0),
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 2,
+        childAspectRatio: (150 / 200),
         children: <Widget>[
           CardCorso(),
           CardCorso(),
@@ -18,22 +19,9 @@ class YourCourses extends StatelessWidget{
           CardCorso(),
           CardCorso(),
           CardCorso(),
-          ),
-          Container(
-            height:200,
-            width:150,
-            child:CardCorso(),
-          ),
-          Container(
-            height:200,
-            width:150,
-            child:CardCorso(),
-          ),
-          Container(
-            height:200,
-            width:150,
-            child:CardCorso(),
-          )
+          CardCorso(),
+          CardCorso(),
+          CardCorso(),
         ]
     );
   }
