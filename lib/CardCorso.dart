@@ -13,6 +13,8 @@ class CardCorso extends StatefulWidget{
 
 class _CardCorso extends State<CardCorso> {
   @override
+
+  //layout carta del corso per home catalogo i tuoi corsi categoria ecc..
   Widget build(BuildContext context) {
     return Container(
       width:150,

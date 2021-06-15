@@ -68,6 +68,13 @@ class Home extends StatelessWidget{
 }
 //Funzione che disegna i corsi popolari
 List<Widget> listPopolari(){
+  List<CardCorso> cardCorsi = [];
+  DatabaseUtils.getListaCorsi().then((corsi){
+      for (Corso corso in corsi){
+        cardCorsi.add(CardCorso(corso));
+      }
+  });
+  return cardCorsi;
   return[
     CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
     CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
@@ -76,7 +83,7 @@ List<Widget> listPopolari(){
     CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
   ];
 }
-//Funzione che disegna i corsi popolari
+//Funzione che disegna i corsi consigliati per l'utente in base alle categori preferite
 List<Widget> listConsigliati(){
   return[
     CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
@@ -86,7 +93,7 @@ List<Widget> listConsigliati(){
     CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
   ];
 }
-//Funzione che disegna i corsi popolari
+//Funzione che disegna i corsi aggiunti di recente
 List<Widget> listAggiuntiRecente(){
   return[
     CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),

@@ -69,7 +69,7 @@ class Catalogo extends StatelessWidget{
     );
   }
 }
-
+//funzione che crea una lista di corsi per una categoria
 List<Widget> listCorsiCat(){
   List<Column> categorie = [];
   for(int i = 0; i < 10; i++){
@@ -91,7 +91,7 @@ List<Widget> listCorsiCat(){
   }
   return categorie;
 }
-
+//funzione che crea il primo gruppo di chip
 List<Widget> listOfChips1(){
     List<Widget> chips = [];
     for (int i = 0; i < 6; i++){
@@ -107,6 +107,7 @@ List<Widget> listOfChips1(){
     }
     return chips;
 }
+//funzione che crea il secondo gruppo di chip
 List<Widget> listOfChips2(){
   List<Widget> chips = [];
   for (int i = 0; i < 6; i++){
