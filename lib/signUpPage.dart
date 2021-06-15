@@ -1,13 +1,13 @@
 /*Pagina di login*/
 
 import 'package:flutter/material.dart';
-import 'package:progetto_camilloni_tiseni_giri/signUpPage.dart';
+import 'package:progetto_camilloni_tiseni_giri/signInPage.dart';
 
 import 'authentication_service.dart';
 import 'package:provider/provider.dart';
 import 'package:progetto_camilloni_tiseni_giri/nav.dart';
 
-class SignInPage extends StatelessWidget {
+class SignUpPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -26,7 +26,7 @@ class SignInPage extends StatelessWidget {
           TextFormField(
             controller: emailController,
             decoration: InputDecoration(
-              labelText: 'Email',
+              labelText: 'Scegli una email',
               border: OutlineInputBorder(),
             ),
           ),
@@ -34,7 +34,7 @@ class SignInPage extends StatelessWidget {
           TextFormField(
             controller: passwordController,
             decoration: InputDecoration(
-              labelText: 'Password',
+              labelText: 'Scegli una password',
               border: OutlineInputBorder(),
             ),
           ),
@@ -45,13 +45,13 @@ class SignInPage extends StatelessWidget {
             children:[
               ElevatedButton(
                 onPressed: () {
-                  context.read<AuthenticationService>().signIn(
+                  context.read<AuthenticationService>().signUp(
                       emailController.text.trim(),
                       passwordController.text.trim(),
                       context
                   );
                 },
-                child: Text("Sign in"),
+                child: Text("Registrati"),
               ),
               SizedBox(width: 50),
               ElevatedButton(
@@ -59,10 +59,10 @@ class SignInPage extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SignUpPage()),
+                        builder: (context) => SignInPage()),
                   );
                 },
-                child: Text("Registrati"),
+                child: Text("vai al login"),
               )
             ],
           )

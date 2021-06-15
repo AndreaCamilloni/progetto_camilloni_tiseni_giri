@@ -13,12 +13,7 @@ class Prova extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () {
-                context.read<AuthenticationService>().signOut();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SignInPage()),
-                );
+                context.read<AuthenticationService>().signOut(context);
             },
             child: Text("Logout"),
           )
