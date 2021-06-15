@@ -4,9 +4,11 @@ le varie destinazioni
 
 import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/YourCourses.dart';
-import 'package:progetto_camilloni_tiseni_giri/prova.dart';
+import 'package:progetto_camilloni_tiseni_giri/area_utente.dart';
 import 'package:progetto_camilloni_tiseni_giri/Home.dart';
 import 'package:progetto_camilloni_tiseni_giri/Catalogo.dart';
+
+import 'authentication_service.dart';
 
 class Nav extends StatefulWidget {
   @override
@@ -17,13 +19,10 @@ class _NavState extends State<Nav> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
     Home(),
-    //Text("home"),
     Catalogo(),
-    //Text("popo"),
     YourCourses(),
-    //Text("Home"),
-    Text("Home"),
-    Prova(),
+    Text("ciao"),
+    AreaUtente(),
 
     //Corsi(),
     //Wishlist(),
@@ -41,6 +40,19 @@ class _NavState extends State<Nav> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text('ProgettoFlutter'),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Condividi', 'Logout'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex)
@@ -78,5 +90,16 @@ class _NavState extends State<Nav> {
         onTap: _onItemTap,
       )
     );
+  }
+}
+
+//funzione che regola il menu nella topAppBar
+handleClick(String value) {
+  switch (value) {
+    case 'Logout':
+      //context.read<AuthenticationService>().signOut(context);
+      break;
+    case 'Settings':
+      break;
   }
 }
