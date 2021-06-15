@@ -105,7 +105,7 @@ class AuthenticationService {
       final User? firebaseUser = _firebaseAuth.currentUser;
       if(firebaseUser != null) {
         await databaseRef.child("Users").child(firebaseUser.uid).set({
-          'firstname': nome,
+          'firstName': nome,
           'lastName': cognome,
           'wishlist': [],
           'categoriePref': [],

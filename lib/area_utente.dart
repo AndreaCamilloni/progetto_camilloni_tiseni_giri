@@ -14,9 +14,10 @@ class AreaUtente extends StatelessWidget{
   final TextEditingController lastnameController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    leggiUtente();
-    print("ciao");
+  Widget build(BuildContext context){
+
+
+    DatabaseUtils.getUtenteLoggato().then((value) => print(value.firstName));
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.all(10.00),
@@ -52,9 +53,5 @@ class AreaUtente extends StatelessWidget{
         ),
       )
     );
-  }
-
-  void leggiUtente() async{
-    DatabaseUtils.getUtenteLoggato().then((value) => print(value.firstName));
   }
 }

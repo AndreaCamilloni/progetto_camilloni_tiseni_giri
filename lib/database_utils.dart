@@ -16,9 +16,9 @@ class DatabaseUtils {
   static Future<Utente> getUtenteLoggato() async{
     var firebaseUser = FirebaseAuth.instance.currentUser;
     if (firebaseUser != null) {
-        _database.child("Users").child(firebaseUser.uid).once().then((DataSnapshot snapshot) async{
+        await _database.child("Users").child(firebaseUser.uid).once().then((DataSnapshot snapshot) {
         Map<dynamic, dynamic> values = snapshot.value;
-        Utente utenteLoggato = Utente(firstName: values['firstname'],lastName: values['lastname'], wishlist: [], iscrizioni: [], categoriePref: []);
+        Utente utenteLoggato = Utente(firstName: values['firstName'],lastName: values['lastName'], wishlist: [], iscrizioni: [], categoriePref: []);
         return utenteLoggato;
       });
     }
