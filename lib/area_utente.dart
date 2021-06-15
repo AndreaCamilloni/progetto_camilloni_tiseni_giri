@@ -16,8 +16,11 @@ class AreaUtente extends StatelessWidget{
   @override
   Widget build(BuildContext context){
 
+    DatabaseUtils.getUtenteLoggato().then((value){
+      firstnameController.text = value.firstName;
+      lastnameController.text = value.lastName;
+    });
 
-    DatabaseUtils.getUtenteLoggato().then((value) => print(value.firstName));
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.all(10.00),
@@ -53,5 +56,11 @@ class AreaUtente extends StatelessWidget{
         ),
       )
     );
+  }
+
+  void leggiUtente() async{
+    Utente utente = await DatabaseUtils.getUtenteLoggato();
+    print(utente.categoriePref);
+    print(utente.firstName);
   }
 }
