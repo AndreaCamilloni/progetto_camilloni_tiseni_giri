@@ -90,20 +90,28 @@ class AuthenticationService {
   }
 
   //funzione per registrare un nuovo utente
-  Future<String?> signUp(String email, String password, BuildContext context) async{
+  Future<String?> signUp(String email, String password, String nome, String cognome, BuildContext context) async{
     try {
+      if(nome == "" || cognome == ""){
+        Fluttertoast.showToast(
+          msg: "Nome e cognome sono richiesti",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+        );
+        return "not registered";
+      }
       await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       final User? firebaseUser = _firebaseAuth.currentUser;
-      final Map<String, String> utente = Map();
       if(firebaseUser != null) {
-        print(firebaseUser.uid);
-        utente[firebaseUser.uid] = utenteToJson(Utente(firstName: "provicchia",
-            lastName: "provicchia",
-            wishlist: [],
-            categoriePref: [],
-            iscrizioni: []));
+        await databaseRef.child("Users").child(firebaseUser.uid).set({
+          'firstname': nome,
+          'lastName': cognome,
+          'wishlist': [],
+          'categoriePref': [],
+          'iscrizioni': [],
+        });
       }
-      databaseRef.child("Users").push().set(utente);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
