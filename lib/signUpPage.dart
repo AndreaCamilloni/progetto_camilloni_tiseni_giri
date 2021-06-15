@@ -10,7 +10,8 @@ import 'package:progetto_camilloni_tiseni_giri/nav.dart';
 class SignUpPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
+  final TextEditingController firstnameController = TextEditingController();
+  final TextEditingController lastnameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,56 +20,76 @@ class SignUpPage extends StatelessWidget {
           title: Text('ProgettoFlutter'),
         ),
       body: Container(
-        margin: const EdgeInsets.only(left: 50.0, right: 50.0),
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextFormField(
-            controller: emailController,
-            decoration: InputDecoration(
-              labelText: 'Scegli una email',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(height: 50),
-          TextFormField(
-            controller: passwordController,
-            decoration: InputDecoration(
-              labelText: 'Scegli una password',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(height: 50),
-
-          Row(
+        margin: const EdgeInsets.only(left: 50.0, right: 50.0, top:100.0),
+        child: SingleChildScrollView(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children:[
-              ElevatedButton(
-                onPressed: () {
-                  context.read<AuthenticationService>().signUp(
-                      emailController.text.trim(),
-                      passwordController.text.trim(),
-                      context
-                  );
-                },
-                child: Text("Registrati"),
+            children: [
+              TextFormField(
+                controller: firstnameController,
+                decoration: InputDecoration(
+                  labelText: 'Il tuo nome',
+                  border: OutlineInputBorder(),
+                ),
               ),
-              SizedBox(width: 50),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SignInPage()),
-                  );
-                },
-                child: Text("vai al login"),
-              )
-            ],
-          )
+              SizedBox(height: 50),
+              TextFormField(
+                controller: lastnameController,
+                decoration: InputDecoration(
+                  labelText: 'Il tuo cognome',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 50),
+              TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  labelText: 'Scegli una email',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 50),
+              TextFormField(
+                controller: passwordController,
+                decoration: InputDecoration(
+                  labelText: 'Scegli una password',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 50),
 
-        ],
-      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:[
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<AuthenticationService>().signUp(
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                          firstnameController.text.trim(),
+                          lastnameController.text.trim(),
+                          context
+                      );
+                    },
+                    child: Text("Registrati"),
+                  ),
+                  SizedBox(width: 50),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignInPage()),
+                      );
+                    },
+                    child: Text("vai al login"),
+                  )
+                ],
+              )
+
+            ],
+          ),
+        ),
       )
     );
 
