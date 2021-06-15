@@ -3,7 +3,10 @@ le varie destinazioni
  */
 
 import 'package:flutter/material.dart';
+import 'package:progetto_camilloni_tiseni_giri/YourCourses.dart';
 import 'package:progetto_camilloni_tiseni_giri/prova.dart';
+import 'package:progetto_camilloni_tiseni_giri/Home.dart';
+import 'package:progetto_camilloni_tiseni_giri/Catalogo.dart';
 
 class Nav extends StatefulWidget {
   @override
@@ -13,13 +16,15 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
-    Text("home"),
-    Text("popo"),
-    Text("Home"),
+    Home(),
+    //Text("home"),
+    Catalogo(),
+    //Text("popo"),
+    YourCourses(),
+    //Text("Home"),
     Text("Home"),
     Prova(),
-    //Home(),
-    //Catalogo(),
+
     //Corsi(),
     //Wishlist(),
     //Profilo(),
