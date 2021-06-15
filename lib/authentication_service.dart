@@ -7,14 +7,18 @@
 
 
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:progetto_camilloni_tiseni_giri/nav.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:progetto_camilloni_tiseni_giri/signInPage.dart';
 
+import 'models/Utente.dart';
+
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
+  final databaseRef = FirebaseDatabase.instance.reference();
   AuthenticationService(this._firebaseAuth);
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
@@ -89,6 +93,17 @@ class AuthenticationService {
   Future<String?> signUp(String email, String password, BuildContext context) async{
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      final User? firebaseUser = _firebaseAuth.currentUser;
+      final Map<String, String> utente = Map();
+      if(firebaseUser != null) {
+        print(firebaseUser.uid);
+        utente[firebaseUser.uid] = utenteToJson(Utente(firstName: "provicchia",
+            lastName: "provicchia",
+            wishlist: [],
+            categoriePref: [],
+            iscrizioni: []));
+      }
+      databaseRef.child("Users").push().set(utente);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
