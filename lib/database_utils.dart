@@ -15,53 +15,42 @@ class DatabaseUtils {
   //prende l'utente loggato
   static Future<Utente> getUtenteLoggato() async{
     var firebaseUser = FirebaseAuth.instance.currentUser;
+    Utente utenteLoggato = Utente(firstName: "",lastName: "", wishlist: [], iscrizioni: [], categoriePref: []);
     if (firebaseUser != null) {
         await _database.child("Users").child(firebaseUser.uid).once().then((DataSnapshot snapshot) {
         Map<dynamic, dynamic> values = snapshot.value;
-        Utente utenteLoggato = Utente(firstName: values['firstName'],lastName: values['lastName'], wishlist: [], iscrizioni: [], categoriePref: []);
-        return utenteLoggato;
+        utenteLoggato = Utente(firstName: values['firstName'],lastName: values['lastName'], wishlist: [], iscrizioni: [], categoriePref: []);
       });
     }
-    return Utente(firstName: "", lastName: "", wishlist: [], iscrizioni: [], categoriePref: []);
+    return utenteLoggato;
   }
 
   //prende la lista dei corsi
-  static Future<List<Corso>> printFirebase() async {
+  static Future<List<Corso>> getListaCorsi() async {
     List<Corso> listaCorsi = [];
-    var query = _database.child('Corsi').limitToFirst(22);
-    //List<Corso> corsi = [];
-    await query.onChildAdded.forEach((element) {
-      var values = element.snapshot.value;
-      List<Lezione> listaLezioni = [];
-      List<Documento> listaDispense = [];
-      for(var lezione in values["lezioni"]){
-        listaLezioni.add(Lezione(descrizione: lezione["descrizione"], id: lezione["id"], titolo: lezione["titolo"], url: lezione["url"]));
-      }
-      for(var doc in values["dispense"]){
-        listaDispense.add(Documento(id: doc["id"], titolo: doc["titolo"]));
-      }
-      var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"]);
-      print(corso.id.toString());
-      listaCorsi.add(corso);
+    await _database.child('Corsi').once().then((DataSnapshot snapshot) {
 
+      for (var values in snapshot.value){
+        List<Lezione> listaLezioni = [];
+        List<Documento> listaDispense = [];
+        for(var lezione in values["lezioni"]){
+          listaLezioni.add(Lezione(descrizione: lezione["descrizione"], id: lezione["id"], titolo: lezione["titolo"], url: lezione["url"]));
+        }
+        if(values["dispense"] != null) {
+          for (var doc in values["dispense"]) {
+            listaDispense.add(Documento(id: doc["id"], titolo: doc["titolo"]));
+          }
+        }
+        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"]);
+        listaCorsi.add(corso);
+        print(listaCorsi.length);
+      }
     });
-    print(listaCorsi.length);
+
+    if (listaCorsi.isEmpty){
+      print("vuota");
+    }
+    print("arrivato al return");
     return listaCorsi;
   }
-
 }
-
-
-
-
-
-
-/* Per prendere tutte le cose sul database
-_database.child("Users").once().then((DataSnapshot snapshot) {
-        Map<dynamic, dynamic> values = snapshot.value;
-        values.forEach((key, values) {
-          print(values["firstName"]);
-        });
-      });
-
- */
