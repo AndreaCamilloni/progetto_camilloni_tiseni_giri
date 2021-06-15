@@ -8,9 +8,11 @@ import 'package:progetto_camilloni_tiseni_giri/models/Corso.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Documento.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Lezione.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Utente.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DatabaseUtils {
   static final _database = FirebaseDatabase.instance.reference();
+  static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   //prende l'utente loggato
   static Future<Utente> getUtenteLoggato() async{
@@ -18,8 +20,26 @@ class DatabaseUtils {
     Utente utenteLoggato = Utente(firstName: "",lastName: "", wishlist: [], iscrizioni: [], categoriePref: []);
     if (firebaseUser != null) {
         await _database.child("Users").child(firebaseUser.uid).once().then((DataSnapshot snapshot) {
-        Map<dynamic, dynamic> values = snapshot.value;
-        utenteLoggato = Utente(firstName: values['firstName'],lastName: values['lastName'], wishlist: [], iscrizioni: [], categoriePref: []);
+          var values = snapshot.value;
+          List<String> wishlist = [];
+          List<String> categoriePref = [];
+          List<String> iscrizioni = [];
+          if(values['wishlist'] != null) {
+            for (var wish in values['wishlist']) {
+              wishlist.add(wish);
+            }
+          }
+          if(values['categoriePref'] != null) {
+            for (var cat in values['categoriePref']) {
+              categoriePref.add(cat);
+            }
+          }
+          if(values['iscrizioni'] != null) {
+            for (var iscr in values['iscrizioni']) {
+              iscrizioni.add(iscr);
+            }
+          }
+        utenteLoggato = Utente(firstName: values['firstName'],lastName: values['lastName'],wishlist: wishlist, iscrizioni: iscrizioni, categoriePref: categoriePref);
       });
     }
     return utenteLoggato;
@@ -43,14 +63,48 @@ class DatabaseUtils {
         }
         var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"]);
         listaCorsi.add(corso);
-        print(listaCorsi.length);
       }
     });
-
-    if (listaCorsi.isEmpty){
-      print("vuota");
-    }
-    print("arrivato al return");
     return listaCorsi;
+  }
+
+  //funzione che aggiorna gli attributi dell'utente loggato
+  static void updateUser(String firstName, String lastName) {
+    final User? firebaseUser = _firebaseAuth.currentUser;
+    Map<String, dynamic> changeMap = {};
+    changeMap['firstName'] = firstName;
+    changeMap['lastName'] = lastName;
+    _database.child('Users').child(firebaseUser!.uid).update(changeMap);
+    Fluttertoast.showToast(
+      msg: "Modifiche salvate",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+    );
+  }
+
+  //funzione che prende tutte le diverse categorie esistenti nel database
+  static Future<Set<String>> getAllCategories() async {
+    Set<String> categorie = Set();
+    await getListaCorsi().then((corsi){
+      for (var corso in corsi){
+        categorie.add(corso.categoria);
+      }
+    });
+    return categorie;
+  }
+
+  //funzione che ritorna il corso di cui passo l'id
+  static Future<Corso> getCorso(String id) async {
+    Corso corso = Corso(id: "", categoria: "", descrizione: "", dispense: [], immagine: "", lezioni: [], titolo: "");
+    await getListaCorsi().then((corsi){
+      for (var c in corsi){
+        if (c.id == id){
+          corso = c;
+          break;
+        }
+      }
+    });
+    return corso;
   }
 }
