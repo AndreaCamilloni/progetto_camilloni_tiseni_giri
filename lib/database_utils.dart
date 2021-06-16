@@ -54,33 +54,28 @@ class DatabaseUtils {
       for (var values in snapshot.value){
         List<Lezione> listaLezioni = [];
         List<Documento> listaDispense = [];
-        List<dynamic> listaRecensioni = [];
+        List<num> listaRecensioni = [];
         for(var lezione in values["lezioni"]){
           listaLezioni.add(Lezione(descrizione: lezione["descrizione"], id: lezione["id"], titolo: lezione["titolo"], url: lezione["url"]));
         }
+        
         if(values["dispense"] != null) {
           for (var doc in values["dispense"]) {
             listaDispense.add(Documento(id: doc["id"], titolo: doc["titolo"]));
           }
         }
-        //Corso corso = Corso.fromJson(values);
+        
         if(values["recensioni"]!= null) {
-          Map<String,dynamic> mapRecensioni = Map.castFrom(values["recensioni"]);
+          Map<String,num> mapRecensioni = Map.castFrom(values["recensioni"]);
           mapRecensioni.forEach((key, value) {
             listaRecensioni.add(value);
           });
         }
-        /*
-        if(values["recensioni"] != null) {
-          List <Map<String,dynamic>> recensioni = List<Map<String, dynamic>>.from(json.decode(values['recensioni']));
-          recensioni.forEach((element) {
-            print("ciao");
-          });
-        }
-
-         */
-
-        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: listaRecensioni);
+        //costruisco la somma degli elemnti della lista di recensioni
+        var sum= listaRecensioni.reduce((a,b) => a+b);
+        //faccio la media
+        var avg = sum/listaRecensioni.length;
+        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: listaRecensioni,avg:avg);
         listaCorsi.add(corso);
       }
     });
@@ -121,7 +116,7 @@ class DatabaseUtils {
 
   //funzione che ritorna il corso di cui passo l'id
   static Future<Corso> getCorso(String id) async {
-    Corso corso = Corso(id: "", categoria: "", descrizione: "", dispense: [], immagine: "", lezioni: [], titolo: "", recensioni: []);
+    Corso corso = Corso(id: "", categoria: "", descrizione: "", dispense: [], immagine: "", lezioni: [], titolo: "", recensioni: [],avg:0.0);
     await getListaCorsi().then((corsi){
       for (var c in corsi){
         if (c.id == id){

@@ -65,7 +65,9 @@ Future<List<Widget>> drawSearch(String query) async {
   List<Widget> cardSearch = [];
   List<Corso> corsi = await DatabaseUtils.getListaCorsi();
   for(var corso in corsi){
-    if(corso.descrizione.contains(query) || corso.categoria.contains(query) || corso.titolo.contains(query)) {
+    if(corso.descrizione.toLowerCase().contains(query.toLowerCase()) ||
+        corso.categoria.toLowerCase().contains(query.toLowerCase()) ||
+        corso.titolo.toLowerCase().contains(query.toLowerCase())) {
       cardSearch.add(CardCorso(corso));
     }
   }

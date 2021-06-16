@@ -18,6 +18,7 @@ class Corso {
     required this.lezioni,
     required this.titolo,
     required this.recensioni,
+    required this.avg,
   });
 
   String id;
@@ -26,7 +27,8 @@ class Corso {
   List<Documento> dispense;
   String immagine;
   List<Lezione> lezioni;
-  List<dynamic> recensioni;
+  List<num> recensioni;
+  num avg;
   String titolo;
 
   factory Corso.fromJson(Map<String, dynamic> json) => Corso(
@@ -40,7 +42,8 @@ class Corso {
             List<Lezione>.from(json["lezioni"].map((x) => Lezione.fromJson(x))),
         titolo: json["titolo"],
     recensioni:
-    List<dynamic>.from(json["recensioni"].map((x) => x)),
+    List<num>.from(json["recensioni"].map((x) => x)),
+    avg: json["id"]
       );
 
   Map<String, dynamic> toJson() => {
