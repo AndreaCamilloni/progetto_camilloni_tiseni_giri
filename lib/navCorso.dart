@@ -36,7 +36,6 @@ class _NavCorsoState extends State<NavCorso> {
 
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           title: Text('ProgettoFlutter'),
           actions: <Widget>[
             PopupMenuButton<String>(
