@@ -2,6 +2,8 @@
   In questa classe ci sono tutti i metodi per recuperare dati dal database e utilizzarli nei vari modelli
 */
 
+import 'dart:ffi';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Corso.dart';
@@ -53,6 +55,7 @@ class DatabaseUtils {
       for (var values in snapshot.value){
         List<Lezione> listaLezioni = [];
         List<Documento> listaDispense = [];
+        List<Float> listaRecensioni = [];
         for(var lezione in values["lezioni"]){
           listaLezioni.add(Lezione(descrizione: lezione["descrizione"], id: lezione["id"], titolo: lezione["titolo"], url: lezione["url"]));
         }
@@ -61,7 +64,12 @@ class DatabaseUtils {
             listaDispense.add(Documento(id: doc["id"], titolo: doc["titolo"]));
           }
         }
-        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"]);
+        if(values["recensioni"] != null) {
+          for (var doc in values["recensioni"]) {
+            listaRecensioni.add(doc);
+          }
+        }
+        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: listaRecensioni);
         listaCorsi.add(corso);
       }
     });
@@ -96,7 +104,7 @@ class DatabaseUtils {
 
   //funzione che ritorna il corso di cui passo l'id
   static Future<Corso> getCorso(String id) async {
-    Corso corso = Corso(id: "", categoria: "", descrizione: "", dispense: [], immagine: "", lezioni: [], titolo: "");
+    Corso corso = Corso(id: "", categoria: "", descrizione: "", dispense: [], immagine: "", lezioni: [], titolo: "", recensioni: []);
     await getListaCorsi().then((corsi){
       for (var c in corsi){
         if (c.id == id){
