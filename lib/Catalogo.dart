@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/CardCorso.dart';
 
+import 'models/Corso.dart';
+
 class Catalogo extends StatelessWidget{
   final TextEditingController searchBarController = TextEditingController();
   @override
   Widget build(BuildContext context){
     return ListView.builder(
+        padding: EdgeInsets.only(top:10, left:10, bottom:10),
         itemCount: 11,
         itemBuilder: (context,index) {
           if (index == 0) {
@@ -48,6 +51,7 @@ class Catalogo extends StatelessWidget{
           }
           return Column(
             children:[
+              SizedBox(height: 20),
               Align(
                   alignment: Alignment.centerLeft,
                   child:Text("Top in", style: TextStyle(fontSize: 24))
@@ -65,7 +69,7 @@ class Catalogo extends StatelessWidget{
     );
   }
 }
-
+//funzione che crea una lista di corsi per una categoria
 List<Widget> listCorsiCat(){
   List<Column> categorie = [];
   for(int i = 0; i < 10; i++){
@@ -87,7 +91,7 @@ List<Widget> listCorsiCat(){
   }
   return categorie;
 }
-
+//funzione che crea il primo gruppo di chip
 List<Widget> listOfChips1(){
     List<Widget> chips = [];
     for (int i = 0; i < 6; i++){
@@ -103,6 +107,7 @@ List<Widget> listOfChips1(){
     }
     return chips;
 }
+//funzione che crea il secondo gruppo di chip
 List<Widget> listOfChips2(){
   List<Widget> chips = [];
   for (int i = 0; i < 6; i++){
@@ -118,30 +123,30 @@ List<Widget> listOfChips2(){
 }
 List<Widget> listPopolari(){
   return[
-    CardCorso(),
-    CardCorso(),
-    CardCorso(),
-    CardCorso(),
-    CardCorso()
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
   ];
 }
 //Funzione che disegna i corsi popolari
 List<Widget> listConsigliati(){
   return[
-    CardCorso(),
-    CardCorso(),
-    CardCorso(),
-    CardCorso(),
-    CardCorso()
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
   ];
 }
 //Funzione che disegna i corsi popolari
 List<Widget> listAggiuntiRecente(){
   return[
-    CardCorso(),
-    CardCorso(),
-    CardCorso(),
-    CardCorso(),
-    CardCorso()
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
+    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "")),
   ];
 }

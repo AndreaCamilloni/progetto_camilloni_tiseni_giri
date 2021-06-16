@@ -4,10 +4,10 @@ le varie destinazioni
 
 import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/YourCourses.dart';
-import 'package:progetto_camilloni_tiseni_giri/area_utente.dart';
+//import 'package:progetto_camilloni_tiseni_giri/area_utente.dart';
 import 'package:progetto_camilloni_tiseni_giri/Home.dart';
 import 'package:progetto_camilloni_tiseni_giri/Catalogo.dart';
-
+import 'area_utente.dart';
 import 'authentication_service.dart';
 
 class Nav extends StatefulWidget {
@@ -21,7 +21,8 @@ class _NavState extends State<Nav> {
     Home(),
     Catalogo(),
     YourCourses(),
-    Text("ciao"),
+    //InfoCorso(),
+    YourCourses(),
     AreaUtente(),
 
     //Corsi(),
