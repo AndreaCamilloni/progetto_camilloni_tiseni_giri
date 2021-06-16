@@ -17,24 +17,29 @@ class _Home extends State<Home>{
   List<Widget> consigliati = [];
   List<Widget> recenti = [];
 
+  //inizializza lo stato del widget
+  @override
+  void initState() {
+    super.initState();
+    listPopolari().then((cardCorsi){
+      setState(() {
+        popolari = cardCorsi;
+      });
+    });
+    listConsigliati().then((cardCorsi){
+      setState(() {
+        consigliati = cardCorsi;
+      });
+    });
+    listAggiuntiRecente().then((cardCorsi){
+      setState(() {
+        recenti = cardCorsi;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context){
-
-      listPopolari().then((cardCorsi){
-        setState(() {
-          popolari = cardCorsi;
-        });
-      });
-      listConsigliati().then((cardCorsi){
-        setState(() {
-          consigliati = cardCorsi;
-        });
-      });
-      listAggiuntiRecente().then((cardCorsi){
-        setState(() {
-          recenti = cardCorsi;
-        });
-      });
 
      return ListView(
           children:<Widget> [
@@ -64,7 +69,7 @@ class _Home extends State<Home>{
                 ),
                 Container(
                   padding: EdgeInsets.only(top:10, left:10, bottom:10),
-                  height:200.0,
+                  height:220.0,
                   child:ListView(
                     scrollDirection: Axis.horizontal,
                     children: consigliati,
@@ -81,7 +86,7 @@ class _Home extends State<Home>{
                 ),
                 Container(
                   padding: EdgeInsets.only(top:10, left:10, bottom:10),
-                  height:200.0,
+                  height:220.0,
                   child:ListView(
                     scrollDirection: Axis.horizontal,
                     children: recenti,

@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Progetto Flutter',
+        debugShowCheckedModeBanner: false,
         home: AuthenticationWrapper(),
       ),
     );

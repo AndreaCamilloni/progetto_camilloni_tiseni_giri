@@ -1,16 +1,67 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/CardCorso.dart';
+import 'package:progetto_camilloni_tiseni_giri/database_utils.dart';
 
 import 'models/Corso.dart';
 
-class Catalogo extends StatelessWidget{
+class Catalogo extends StatefulWidget{
+
+  @override
+  _Catalogo createState() => _Catalogo();
+}
+
+class _Catalogo extends State<Catalogo>{
   final TextEditingController searchBarController = TextEditingController();
+
+  HashMap<String,List<Widget>> mapCorsi = HashMap<String,List<Widget>>();
+  Set<String> listCategorie = Set();
+  List<Widget> listOfChips1 = [];
+  List<Widget> listOfChips2 = [];
+  bool nullable = false;
+
+  initState() {
+
+    DatabaseUtils.getAllCategories().then((categorie){
+      setState(() {
+        listCategorie.addAll(categorie);
+      });
+    });
+    corsiByCat().then((corsiByCat){
+      setState(() {
+        mapCorsi.addAll(corsiByCat);
+      });
+    });
+    nullable = (mapCorsi != null);
+    populateChips().then((chips){
+      setState(() {
+        listOfChips1 = [];
+        listOfChips2 = [];
+        for(int i=0; i< chips.length; i++){
+          if(i%2 == 0) {
+            listOfChips1.add(chips.elementAt(i));
+          }
+          else {
+            listOfChips2.add(chips.elementAt(i));
+          }
+        }
+        print(listOfChips1.length);
+        print(listOfChips2.length);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context){
+    corsiByCat().then((corsiByCat){
+      mapCorsi = corsiByCat;
+      print("ciao");
+    });
     return ListView.builder(
         padding: EdgeInsets.only(top:10, left:10, bottom:10),
-        itemCount: 11,
+        itemCount: listCategorie.length+1,
         itemBuilder: (context,index) {
           if (index == 0) {
             return Column(
@@ -33,14 +84,14 @@ class Catalogo extends StatelessWidget{
                       height: 50,
                       child:ListView(
                           scrollDirection: Axis.horizontal,
-                          children: listOfChips1()
+                          children: listOfChips1
                         ),
                       ),
                       Container(
                         height: 50,
                         child:ListView(
                             scrollDirection: Axis.horizontal,
-                            children: listOfChips2()
+                            children: listOfChips2
                         ),
                       ),
                     ]
@@ -54,13 +105,13 @@ class Catalogo extends StatelessWidget{
               SizedBox(height: 20),
               Align(
                   alignment: Alignment.centerLeft,
-                  child:Text("Top in", style: TextStyle(fontSize: 24))
+                  child:Text("Top in " + listCategorie.elementAt(index-1), style: TextStyle(fontSize: 24))
               ),
               Container(
-                height:200.0,
+                height:220.0,
                 child:ListView(
                   scrollDirection: Axis.horizontal,
-                  children: listAggiuntiRecente(),
+                  children: mapCorsi[listCategorie.elementAt(index-1)]!
                 ),
               )
             ],
@@ -69,84 +120,42 @@ class Catalogo extends StatelessWidget{
     );
   }
 }
-//funzione che crea una lista di corsi per una categoria
-List<Widget> listCorsiCat(){
-  List<Column> categorie = [];
-  for(int i = 0; i < 10; i++){
-    Column(
-      children:[
-        Align(
-            alignment: Alignment.centerLeft,
-            child:Text("Popolari", style: TextStyle(fontSize: 24))
-        ),
-        Container(
-          height:200.0,
-          child:ListView(
-            scrollDirection: Axis.horizontal,
-            children: listPopolari(),
-          ),
-        ),
-      ],
-    );
-  }
-  return categorie;
-}
-//funzione che crea il primo gruppo di chip
-List<Widget> listOfChips1(){
-    List<Widget> chips = [];
-    for (int i = 0; i < 6; i++){
+//funzione che popola la lista di chip
+Future<List<Widget>> populateChips() async{
+  List<Widget> chips = [];
+
+  await DatabaseUtils.getAllCategories().then((categorie) {
+    for (int i = 0; i < categorie.length; i++) {
       chips.add(
         Padding(
           padding: const EdgeInsets.all(2.0),
-          child:ActionChip(
-            label: Text('Categoria'),
-            onPressed: () {},
+          child: ActionChip(
+            label: Text(categorie.elementAt(i)),
+            onPressed: () {
+              },
           ),
         ),
       );
     }
-    return chips;
-}
-//funzione che crea il secondo gruppo di chip
-List<Widget> listOfChips2(){
-  List<Widget> chips = [];
-  for (int i = 0; i < 6; i++){
-    chips.add(Padding(
-      padding: const EdgeInsets.all(2.0),
-      child:ActionChip(
-        label: Text('Categoria'),
-        onPressed: () {},
-      ),
-    ));
   }
+  );
   return chips;
 }
-List<Widget> listPopolari(){
-  return[
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-  ];
-}
-//Funzione che disegna i corsi popolari
-List<Widget> listConsigliati(){
-  return[
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-  ];
-}
-//Funzione che disegna i corsi popolari
-List<Widget> listAggiuntiRecente(){
-  return[
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-    CardCorso(Corso(id:"", categoria: "", descrizione: "", dispense: [], immagine:"", lezioni: [], titolo: "", recensioni : [])),
-  ];
+
+// ritorna un hashmap in cui la chiave è la categoria a cui appartengono i corsi e il valore è la lista
+// dei corsi appartenenti a quella categoria
+Future<HashMap<String,List<Widget>>> corsiByCat() async {
+  HashMap<String,List<Widget>> corsiByCat = HashMap();
+  List<Corso> corsi = await DatabaseUtils.getListaCorsi();
+  Set<String> categorie = await DatabaseUtils.getAllCategories();
+  for(String categoria in categorie){
+    List<Widget> tmp = [];
+    for(Corso corso in corsi){
+      if(corso.categoria == categoria){
+        tmp.add(CardCorso(corso));
+      }
+    }
+    corsiByCat.putIfAbsent(categoria, () => tmp);
+  }
+  return corsiByCat;
 }
