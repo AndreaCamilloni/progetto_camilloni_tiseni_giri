@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Documento.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Lezione.dart';
@@ -25,7 +26,7 @@ class Corso {
   List<Documento> dispense;
   String immagine;
   List<Lezione> lezioni;
-  List<double> recensioni;
+  List<dynamic> recensioni;
   String titolo;
 
   factory Corso.fromJson(Map<String, dynamic> json) => Corso(
@@ -39,7 +40,7 @@ class Corso {
             List<Lezione>.from(json["lezioni"].map((x) => Lezione.fromJson(x))),
         titolo: json["titolo"],
     recensioni:
-    List<double>.from(json["recensioni"].map((x) => x)),
+    List<dynamic>.from(json["recensioni"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {

@@ -2,6 +2,8 @@
   In questa classe ci sono tutti i metodi per recuperare dati dal database e utilizzarli nei vari modelli
 */
 
+import 'dart:collection';
+import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Corso.dart';
@@ -49,11 +51,10 @@ class DatabaseUtils {
   static Future<List<Corso>> getListaCorsi() async {
     List<Corso> listaCorsi = [];
     await _database.child('Corsi').once().then((DataSnapshot snapshot) {
-
       for (var values in snapshot.value){
         List<Lezione> listaLezioni = [];
         List<Documento> listaDispense = [];
-        List<double> listaRecensioni = [];
+        List<dynamic> listaRecensioni = [];
         for(var lezione in values["lezioni"]){
           listaLezioni.add(Lezione(descrizione: lezione["descrizione"], id: lezione["id"], titolo: lezione["titolo"], url: lezione["url"]));
         }
@@ -62,12 +63,24 @@ class DatabaseUtils {
             listaDispense.add(Documento(id: doc["id"], titolo: doc["titolo"]));
           }
         }
-        /*if(values["recensioni"] != null) {
-          for (var doc in values["recensioni"]) {
-            listaRecensioni.add(doc);
-          }
-        }*/
-        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: []);
+        //Corso corso = Corso.fromJson(values);
+        if(values["recensioni"]!= null) {
+          Map<String,dynamic> mapRecensioni = Map.castFrom(values["recensioni"]);
+          mapRecensioni.forEach((key, value) {
+            listaRecensioni.add(value);
+          });
+        }
+        /*
+        if(values["recensioni"] != null) {
+          List <Map<String,dynamic>> recensioni = List<Map<String, dynamic>>.from(json.decode(values['recensioni']));
+          recensioni.forEach((element) {
+            print("ciao");
+          });
+        }
+
+         */
+
+        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: listaRecensioni);
         listaCorsi.add(corso);
       }
     });
