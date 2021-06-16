@@ -48,8 +48,6 @@ class _Catalogo extends State<Catalogo>{
             listOfChips2.add(chips.elementAt(i));
           }
         }
-        print(listOfChips1.length);
-        print(listOfChips2.length);
       });
     });
   }
@@ -58,7 +56,6 @@ class _Catalogo extends State<Catalogo>{
   Widget build(BuildContext context){
     corsiByCat().then((corsiByCat){
       mapCorsi = corsiByCat;
-      print("ciao");
     });
     return ListView.builder(
         padding: EdgeInsets.only(top:10, left:10, bottom:10),

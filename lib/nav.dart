@@ -9,7 +9,9 @@ import 'package:progetto_camilloni_tiseni_giri/YourCourses.dart';
 import 'package:progetto_camilloni_tiseni_giri/Home.dart';
 import 'package:progetto_camilloni_tiseni_giri/Catalogo.dart';
 import 'area_utente.dart';
+import 'package:share_plus/share_plus.dart';
 import 'authentication_service.dart';
+import 'package:provider/provider.dart';
 
 class Nav extends StatefulWidget {
   @override
@@ -39,12 +41,12 @@ class _NavState extends State<Nav> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('ProgettoFlutter'),
+        title: Text('Corsi per tutti'),
         actions: <Widget>[
           PopupMenuButton<String>(
             onSelected: handleClick,
             itemBuilder: (BuildContext context) {
-              return {'Condividi', 'Logout'}.map((String choice) {
+              return {'Condividi'}.map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),
@@ -94,12 +96,6 @@ class _NavState extends State<Nav> {
 }
 
 //funzione che regola il menu nella topAppBar
-handleClick(String value) {
-  switch (value) {
-    case 'Logout':
-      //context.read<AuthenticationService>().signOut(context);
-      break;
-    case 'Settings':
-      break;
-  }
+handleClick(String values) {
+  Share.share('check out my website https://example.com', subject: 'Look what I made!');
 }

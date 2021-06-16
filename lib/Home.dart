@@ -122,6 +122,12 @@ Future<List<Widget>> listConsigliati() async {
     List<Widget> cardCorsi = [];
     Utente currUser = await DatabaseUtils.getUtenteLoggato();
     List<Corso> corsi = await DatabaseUtils.getListaCorsi();
+    if(currUser.categoriePref.isEmpty){
+      for (Corso corso in corsi){
+        cardCorsi.add(CardCorso(corso));
+      }
+      return cardCorsi;
+    }
     for (Corso corso in corsi){
       if(currUser.categoriePref.contains(corso.categoria)){
         cardCorsi.add(CardCorso(corso));
