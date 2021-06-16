@@ -19,30 +19,32 @@ class _AreaUtente extends State<AreaUtente>{
   final TextEditingController lastnameController = TextEditingController();
   List<Widget> listOfChips1 = [];
   List<Widget> listOfChips2 = [];
-  @override
-  Widget build(BuildContext context){
 
+  initState() {
     DatabaseUtils.getUtenteLoggato().then((utente){
-      setState(() {
-        firstnameController.text = utente.firstName;
-        lastnameController.text = utente.lastName;
-
-        populateChips(utente).then((chips){
-          listOfChips1 = [];
-          listOfChips2 = [];
-          for(int i=0; i< chips.length; i++){
-            if(i%2 == 0) {
-              listOfChips1.add(chips.elementAt(i));
-            }
-            else {
-              listOfChips2.add(chips.elementAt(i));
-            }
+      firstnameController.text = utente.firstName;
+      lastnameController.text = utente.lastName;
+      populateChips(utente).then((chips){
+        setState(() {
+        listOfChips1 = [];
+        listOfChips2 = [];
+        for(int i=0; i< chips.length; i++){
+          if(i%2 == 0) {
+            listOfChips1.add(chips.elementAt(i));
           }
-          print(listOfChips1.length);
-          print(listOfChips2.length);
+          else {
+            listOfChips2.add(chips.elementAt(i));
+          }
+        }
+        print(listOfChips1.length);
+        print(listOfChips2.length);
         });
       });
     });
+  }
+  @override
+  Widget build(BuildContext context){
+
 
 
 
@@ -112,21 +114,22 @@ class _AreaUtente extends State<AreaUtente>{
       )
     );
   }
-}
 
-//questa funzione popola le chips con le categorie prese dal db, e "checka" quelle preferite dell'utente
-Future<List<Widget>> populateChips(Utente utente) async{
-  List<Widget> chips = [];
-  List<String> categoriePref = utente.categoriePref;
-  bool checked = false;
-  await DatabaseUtils.getAllCategories().then((categorie){
-    for(int i = 0; i<categorie.length; i++){
-      checked = false;
-      if(categoriePref != [])
-        for(var cat in categoriePref) {
-          if (categorie.elementAt(i) == cat)
-            checked = true;
-        }
+  //questa funzione popola le chips con le categorie prese dal db, e "checka" quelle preferite dell'utente
+  Future<List<Widget>> populateChips(Utente utente) async{
+    List<Widget> chips = [];
+    List<String> categoriePref = utente.categoriePref;
+    bool checked = false;
+
+
+    await DatabaseUtils.getAllCategories().then((categorie) {
+      for (int i = 0; i < categorie.length; i++) {
+        checked = false;
+        if (categoriePref != [])
+          for (var cat in categoriePref) {
+            if (categorie.elementAt(i) == cat)
+              checked = true;
+          }
         chips.add(
           Padding(
             padding: const EdgeInsets.all(2.0),
@@ -134,12 +137,17 @@ Future<List<Widget>> populateChips(Utente utente) async{
               label: Text(categorie.elementAt(i)),
               selected: checked,
               onSelected: (bool value) {
+                setState(() {
+                  checked = !checked;
+                });
               },
             ),
           ),
         );
+      }
     }
+    );
+    return chips;
   }
-  );
-  return chips;
 }
+
