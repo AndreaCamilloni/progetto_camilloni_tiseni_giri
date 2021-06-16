@@ -36,7 +36,21 @@ class _NavCorsoState extends State<NavCorso> {
 
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text('ProgettoFlutter'),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              onSelected: handleClick,
+              itemBuilder: (BuildContext context) {
+                return {'Condividi', 'Logout'}.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              },
+            ),
+          ],
         ),
         body: Center(
             child: _widgetOptions.elementAt(_selectedIndex)
@@ -66,5 +80,14 @@ class _NavCorsoState extends State<NavCorso> {
           onTap: _onItemTap,
         )
     );
+  }
+  handleClick(String value) {
+    switch (value) {
+      case 'Logout':
+      //context.read<AuthenticationService>().signOut(context);
+        break;
+      case 'Settings':
+        break;
+    }
   }
 }

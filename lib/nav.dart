@@ -3,6 +3,7 @@ le varie destinazioni
  */
 
 import 'package:flutter/material.dart';
+import 'package:progetto_camilloni_tiseni_giri/WishList.dart';
 import 'package:progetto_camilloni_tiseni_giri/YourCourses.dart';
 //import 'package:progetto_camilloni_tiseni_giri/area_utente.dart';
 import 'package:progetto_camilloni_tiseni_giri/Home.dart';
@@ -21,7 +22,7 @@ class _NavState extends State<Nav> {
     Home(),
     Catalogo(),
     YourCourses(),
-    YourCourses(),
+    WishList(),
     AreaUtente(),
     //Corsi(),
     //Wishlist(),

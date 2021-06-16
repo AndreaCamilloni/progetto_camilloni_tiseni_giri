@@ -19,10 +19,17 @@ class _InfoCorso extends State<InfoCorso> {
 
   initState(){
     DatabaseUtils.getUtenteLoggato().then((utente){
-      if(utente.wishlist.contains(widget.corso.id))
-        _isFavorite = true;
-      if(utente.wishlist.contains(widget.corso.id))
-        _isIscritto = true;
+      if(utente.iscrizioni.contains(widget.corso.id)){
+        setState(() {
+          _isIscritto = true;
+        });
+      }
+
+      if(utente.wishlist.contains(widget.corso.id)){
+        setState(() {
+          _isFavorite = true;
+        });
+      }
     });
   }
 
