@@ -1,7 +1,9 @@
 //classe che implementa lo scrren per i video
 
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flutter/services.dart';
+//import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 class VideoScreen extends StatefulWidget{
 
   final String id;
@@ -14,25 +16,25 @@ class VideoScreen extends StatefulWidget{
 //classe per creare lo youtube player
 class _VideoScreenState extends State<VideoScreen>{
 
+  YoutubePlayerController _controller = YoutubePlayerController(initialVideoId: "");
+
   @override
   Widget build(BuildContext context){
+    YoutubePlayerController _controller = YoutubePlayerController(
+      initialVideoId: widget.id,
+      params: YoutubePlayerParams(
+        showControls: true,
+        showFullscreenButton: false,
+        autoPlay:false,
+      ),
+    );
     return Container(
         height:200,
-        child:YoutubePlayer(
-          controller:YoutubePlayerController(
-            initialVideoId: widget.id,
-            flags: YoutubePlayerFlags(
-              hideControls: false,
-              controlsVisibleAtStart: true,
-              autoPlay: false,
-              mute: false,
-            ),
-          ),
-          showVideoProgressIndicator: true,
-          onReady: (){
-            print('Player is ready');
-          },
+        child:YoutubePlayerIFrame(
+          controller: _controller,
+          aspectRatio: 16/9,
         )
     );
+
   }
 }
