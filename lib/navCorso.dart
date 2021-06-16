@@ -4,6 +4,7 @@ import 'package:progetto_camilloni_tiseni_giri/YourCourses.dart';
 import 'package:progetto_camilloni_tiseni_giri/Home.dart';
 import 'package:progetto_camilloni_tiseni_giri/Catalogo.dart';
 
+import 'Dispense.dart';
 import 'InfoCorso.dart';
 import 'Lezioni.dart';
 import 'models/Corso.dart';
@@ -26,16 +27,13 @@ class _NavCorsoState extends State<NavCorso> {
   }
   @override
   Widget build(BuildContext context){
+
     List<Widget> _widgetOptions = <Widget>[
       InfoCorso(widget.corso),
-      Lezioni(),
-      Text("popo"),
-      //Dispense(),
-
-      //Corsi(),
-      //Wishlist(),
-      //Profilo(),
+      Lezioni(widget.corso),
+      Dispense(widget.corso),
     ];
+
     return Scaffold(
         appBar: AppBar(
           title: Text('ProgettoFlutter'),

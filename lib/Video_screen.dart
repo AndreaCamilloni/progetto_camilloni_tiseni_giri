@@ -1,3 +1,5 @@
+//classe che implementa lo scrren per i video
+
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class VideoScreen extends StatefulWidget{
@@ -16,7 +18,6 @@ class _VideoScreenState extends State<VideoScreen>{
   Widget build(BuildContext context){
     return Container(
         height:200,
-        width:300,
         child:YoutubePlayer(
           controller:YoutubePlayerController(
             initialVideoId: widget.id,

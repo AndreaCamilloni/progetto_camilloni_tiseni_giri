@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/CardCorso.dart';
 import 'package:progetto_camilloni_tiseni_giri/database_utils.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Utente.dart';
-
+import 'dart:math';
 import 'models/Corso.dart';
 
 class Home extends StatefulWidget{
@@ -111,10 +111,11 @@ class _Home extends State<Home>{
 Future<List<Widget>> listPopolari() async {
   List<Widget> cardCorsi = [];
   List<Corso> corsi = await DatabaseUtils.getListaCorsi();
+  corsi.sort((Corso corso1, Corso corso2) => (corso1.avg.compareTo(corso2.avg)));
       for (Corso corso in corsi){
         cardCorsi.add(CardCorso(corso));
       }
-  return cardCorsi;
+      return cardCorsi.sublist(cardCorsi.indexOf(cardCorsi.first),cardCorsi.indexOf(cardCorsi.first)+5);
 }
 //Funzione che disegna i corsi consigliati per l'utente in base alle categori preferite
 Future<List<Widget>> listConsigliati() async {
@@ -126,7 +127,12 @@ Future<List<Widget>> listConsigliati() async {
         cardCorsi.add(CardCorso(corso));
       }
     }
-    return cardCorsi;
+    if(cardCorsi.length <= 5) {
+      return cardCorsi;
+    }
+    else{
+      return cardCorsi.sublist(cardCorsi.indexOf(cardCorsi.first),cardCorsi.indexOf(cardCorsi.first)+5);
+    }
 }
 //Funzione che disegna i corsi aggiunti di recente
 Future<List<Widget>> listAggiuntiRecente() async {
