@@ -23,7 +23,6 @@ class _Catalogo extends State<Catalogo>{
   Set<String> listCategorie = Set();
   List<Widget> listOfChips1 = [];
   List<Widget> listOfChips2 = [];
-  bool nullable = false;
 
   initState() {
 
@@ -37,7 +36,6 @@ class _Catalogo extends State<Catalogo>{
         mapCorsi.addAll(corsiByCat);
       });
     });
-    nullable = (mapCorsi != null);
     populateChips(context).then((chips){
       setState(() {
         listOfChips1 = [];
@@ -121,7 +119,7 @@ class _Catalogo extends State<Catalogo>{
                 height:220.0,
                 child:ListView(
                   scrollDirection: Axis.horizontal,
-                  children: mapCorsi[listCategorie.elementAt(index-1)]!
+                  children: mapCorsi[listCategorie.elementAt(index-1)] != null ? mapCorsi[listCategorie.elementAt(index-1)]! : new List.empty()
                 ),
               )
             ],
