@@ -134,4 +134,4 @@ class DatabaseUtils {
     return iscrizioni;
   }
 }
-}
+
