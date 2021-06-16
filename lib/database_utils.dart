@@ -75,11 +75,17 @@ class DatabaseUtils {
   }
 
   //funzione che aggiorna gli attributi dell'utente loggato
-  static void updateUser(String firstName, String lastName) {
+  static void updateUser(String firstName, String lastName, Set<String> categorie) {
     final User? firebaseUser = _firebaseAuth.currentUser;
     Map<String, dynamic> changeMap = {};
+    List<String> cat = [];
+    for(var c in categorie){
+      cat.add(c);
+    }
+
     changeMap['firstName'] = firstName;
     changeMap['lastName'] = lastName;
+    changeMap['categoriePref'] = cat;
     _database.child('Users').child(firebaseUser!.uid).update(changeMap);
     Fluttertoast.showToast(
       msg: "Modifiche salvate",
@@ -113,4 +119,19 @@ class DatabaseUtils {
     });
     return corso;
   }
+
+  // funzione che estrae dai corsi i corsi a cui è iscritto un certo utente
+  static Future<List<Corso>> getIscrizioni() async{
+    List<Corso> iscrizioni = [];
+    Utente currUser = await getUtenteLoggato();
+    await getListaCorsi().then((corsi){
+      for(Corso corso in corsi){
+        if(currUser.iscrizioni.contains(corso.id)){
+          iscrizioni.add(corso);
+        }
+      }
+    });
+    return iscrizioni;
+  }
+}
 }

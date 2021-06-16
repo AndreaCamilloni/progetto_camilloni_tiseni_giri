@@ -2,10 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/database_utils.dart';
 import 'package:progetto_camilloni_tiseni_giri/signInPage.dart';
-
+import 'package:flutter_test/src/widget_tester.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'authentication_service.dart';
 import 'package:provider/provider.dart';
 import 'package:progetto_camilloni_tiseni_giri/nav.dart';
+
 
 import 'models/Utente.dart';
 
@@ -13,7 +15,7 @@ class AreaUtente extends StatefulWidget{
 
   _AreaUtente createState() => _AreaUtente();
 }
-
+Set<String> categoriePreferite = Set();
 class _AreaUtente extends State<AreaUtente>{
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
@@ -103,7 +105,7 @@ class _AreaUtente extends State<AreaUtente>{
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
                     onPressed: () {
-                    DatabaseUtils.updateUser(firstnameController.text, lastnameController.text);
+                      DatabaseUtils.updateUser(firstnameController.text, lastnameController.text, categoriePreferite);
                   },
                   child: Text("Salva le modifiche"),
                 ),
@@ -127,27 +129,49 @@ class _AreaUtente extends State<AreaUtente>{
         checked = false;
         if (categoriePref != [])
           for (var cat in categoriePref) {
-            if (categorie.elementAt(i) == cat)
+            if (categorie.elementAt(i) == cat) {
+              categoriePreferite.add(categorie.elementAt(i));
               checked = true;
+            }
           }
-        chips.add(
-          Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: FilterChip(
-              label: Text(categorie.elementAt(i)),
-              selected: checked,
-              onSelected: (bool value) {
-                setState(() {
-                  checked = !checked;
-                });
-              },
-            ),
-          ),
-        );
+        chips.add(filterChipWidget(categorie.elementAt(i), checked));
       }
     }
     );
     return chips;
+  }
+}
+
+class filterChipWidget extends StatefulWidget{
+  final String chipName;
+  bool checked;
+  filterChipWidget(this.chipName, this.checked);
+
+  @override
+  _filterChipWidgetState createState() => _filterChipWidgetState();
+}
+
+class _filterChipWidgetState extends State<filterChipWidget> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: FilterChip(
+        label: Text(widget.chipName),
+        selected: widget.checked,
+        onSelected: (isSelected) {
+          if(isSelected)
+            categoriePreferite.add(widget.chipName);
+          else
+            categoriePreferite.remove(widget.chipName);
+          setState(() {
+            widget.checked = isSelected;
+          });
+        },
+      )
+    );
   }
 }
 
