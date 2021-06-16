@@ -9,7 +9,12 @@ import 'package:progetto_camilloni_tiseni_giri/nav.dart';
 
 import 'models/Utente.dart';
 
-class AreaUtente extends StatelessWidget{
+class AreaUtente extends StatefulWidget{
+
+  _AreaUtente createState() => _AreaUtente();
+}
+
+class _AreaUtente extends State<AreaUtente>{
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
   List<Widget> listOfChips1 = [];
@@ -18,22 +23,24 @@ class AreaUtente extends StatelessWidget{
   Widget build(BuildContext context){
 
     DatabaseUtils.getUtenteLoggato().then((utente){
-      firstnameController.text = utente.firstName;
-      lastnameController.text = utente.lastName;
+      setState(() {
+        firstnameController.text = utente.firstName;
+        lastnameController.text = utente.lastName;
 
-      populateChips(utente).then((chips){
-        listOfChips1 = [];
-        listOfChips2 = [];
-        for(int i=0; i< chips.length; i++){
-          if(i%2 == 0) {
-            listOfChips1.add(chips.elementAt(i));
+        populateChips(utente).then((chips){
+          listOfChips1 = [];
+          listOfChips2 = [];
+          for(int i=0; i< chips.length; i++){
+            if(i%2 == 0) {
+              listOfChips1.add(chips.elementAt(i));
+            }
+            else {
+              listOfChips2.add(chips.elementAt(i));
+            }
           }
-          else {
-            listOfChips2.add(chips.elementAt(i));
-          }
-        }
-        print(listOfChips1.length);
-        print(listOfChips2.length);
+          print(listOfChips1.length);
+          print(listOfChips2.length);
+        });
       });
     });
 

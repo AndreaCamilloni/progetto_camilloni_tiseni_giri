@@ -17,7 +17,7 @@ class _CardCorso extends State<CardCorso> {
   //layout carta del corso per home catalogo i tuoi corsi categoria ecc..
   Widget build(BuildContext context) {
     return Container(
-      width:150,
+      width:170,
       child:GestureDetector(
         onTap:() {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -42,7 +42,7 @@ class _CardCorso extends State<CardCorso> {
                 child:Text(
                   widget.corso.titolo,
                   style: TextStyle(color: Colors.black.withOpacity(0.6),
-                  fontSize: 18),
+                  fontSize: 16),
                 ),
             ),
             ],

@@ -2,8 +2,6 @@
   In questa classe ci sono tutti i metodi per recuperare dati dal database e utilizzarli nei vari modelli
 */
 
-import 'dart:ffi';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Corso.dart';
@@ -55,7 +53,7 @@ class DatabaseUtils {
       for (var values in snapshot.value){
         List<Lezione> listaLezioni = [];
         List<Documento> listaDispense = [];
-        List<Float> listaRecensioni = [];
+        List<double> listaRecensioni = [];
         for(var lezione in values["lezioni"]){
           listaLezioni.add(Lezione(descrizione: lezione["descrizione"], id: lezione["id"], titolo: lezione["titolo"], url: lezione["url"]));
         }
@@ -64,12 +62,12 @@ class DatabaseUtils {
             listaDispense.add(Documento(id: doc["id"], titolo: doc["titolo"]));
           }
         }
-        if(values["recensioni"] != null) {
+        /*if(values["recensioni"] != null) {
           for (var doc in values["recensioni"]) {
             listaRecensioni.add(doc);
           }
-        }
-        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: listaRecensioni);
+        }*/
+        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: []);
         listaCorsi.add(corso);
       }
     });
