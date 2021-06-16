@@ -72,12 +72,17 @@ class DatabaseUtils {
           });
         }
         //costruisco la somma degli elemnti della lista di recensioni
-        var sum = 0.0;
+        num sum = 0;
         for(num recensione in listaRecensioni) {
           sum+=recensione;
         }
+        num avg = 0;
         //faccio la media
-        var avg = sum/listaRecensioni.length;
+        if(listaRecensioni.length != 0) {
+          avg = sum/listaRecensioni.length;
+        }
+
+        //print("media: " + "$avg " + "id_corso: " "${values['id']}");
         var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: listaRecensioni,avg:avg, docente: values["docente"] != null? values["docente"]:"Sconosciuto", prezzo: values["prezzo"] != null? values["prezzo"]: "Corso gratuito");
         listaCorsi.add(corso);
       }

@@ -4,7 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Documento.dart';
 import 'package:progetto_camilloni_tiseni_giri/models/Lezione.dart';
 
-class Corso {
+class Corso implements Comparable{
   Corso({
     required this.id,
     required this.categoria,
@@ -30,4 +30,15 @@ class Corso {
   String titolo;
   String docente;
   String prezzo;
+
+  @override
+  int compareTo(other) {
+    if(this.avg < other.avg){
+      return 1;
+    }
+    else if(this.avg > other.avg){
+      return -1;
+    }
+    else return 0;
+  }
 }

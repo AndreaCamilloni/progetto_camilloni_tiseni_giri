@@ -111,9 +111,10 @@ class _Home extends State<Home>{
 Future<List<Widget>> listPopolari() async {
   List<Widget> cardCorsi = [];
   List<Corso> corsi = await DatabaseUtils.getListaCorsi();
-  corsi.sort((Corso corso1, Corso corso2) => (corso1.avg.compareTo(corso2.avg)));
+  corsi.sort();
       for (Corso corso in corsi){
         cardCorsi.add(CardCorso(corso));
+        print("media: ${corso.avg}, id_corso ${corso.id}");
       }
       return cardCorsi.sublist(cardCorsi.indexOf(cardCorsi.first),cardCorsi.indexOf(cardCorsi.first)+5);
 }
