@@ -95,20 +95,25 @@ class _AreaUtente extends State<AreaUtente>{
                     children: listOfChips2,
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  context.read<AuthenticationService>().signOut(context);
-                },
-                child: Text("Logout"),
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                    onPressed: () {
-                      DatabaseUtils.updateUser(firstnameController.text, lastnameController.text, categoriePreferite);
-                  },
-                  child: Text("Salva le modifiche"),
-                ),
+              SizedBox(height:40),
+              Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:[
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<AuthenticationService>().signOut(context);
+                      },
+                      child: Text("Logout"),
+                    ),
+                    SizedBox(width:50),
+                    ElevatedButton(
+                      onPressed: () {
+                        DatabaseUtils.updateUser(firstnameController.text, lastnameController.text, categoriePreferite);
+                      },
+                      child: Text("Salva le modifiche"),
+                    ),
+                  ]
               )
             ],
           ),
