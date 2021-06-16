@@ -43,7 +43,7 @@ class _InfoCorso extends State<InfoCorso> {
               children: [
                 Image.network(
                     widget.corso.immagine,
-                    height: 200, fit: BoxFit.fitWidth),
+                    fit: BoxFit.fitWidth),
                 Padding(
                   padding:EdgeInsets.only(left:8.0,top:4.0,right:8.0),
                   child:Row(
