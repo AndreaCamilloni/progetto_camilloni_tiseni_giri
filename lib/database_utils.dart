@@ -61,7 +61,7 @@ class DatabaseUtils {
         
         if(values["dispense"] != null) {
           for (var doc in values["dispense"]) {
-            listaDispense.add(Documento(id: doc["id"], titolo: doc["titolo"]));
+            listaDispense.add(Documento(id: doc["id"], titolo: doc["titolo"], url: doc['url']));
           }
         }
         
@@ -104,6 +104,76 @@ class DatabaseUtils {
       gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 1,
     );
+  }
+
+  //funzione che aggiunge il corso alla wishlist se non c'è già, se c'è gia lo elimina
+  static void updateWishlist(String idCorso){
+    final User? firebaseUser = _firebaseAuth.currentUser;
+    Map<String, dynamic> changeMap = {};
+    getUtenteLoggato().then((utente) {
+      for(var i=0; i<utente.wishlist.length; i++){
+        changeMap[i.toString()] = utente.wishlist[i];
+      }
+      var found = false;
+      var keyDaRimuovere;
+      changeMap.forEach((key, value) {
+        if(value==idCorso){
+          keyDaRimuovere = key;
+          found = true;
+        }
+      });
+      if(found) {
+        changeMap.remove(keyDaRimuovere);
+        Map<String, dynamic> tmpMap = Map();
+        int it = 0;
+        changeMap.forEach((key, value) {
+          tmpMap[it.toString()] = value;
+          it++;
+        });
+        changeMap = tmpMap;
+      }
+      else{
+        int id = 0;
+        changeMap.forEach((key, value) { id++; });
+        changeMap[id.toString()] = idCorso;
+      }
+      _database.child('Users').child(firebaseUser!.uid).child('wishlist').set(changeMap);
+    });
+  }
+
+  //funzione che aggiunge il corso alle iscrizioni se non c'è già, se c'è gia lo elimina
+  static void updateIscrizioni(String idCorso){
+    final User? firebaseUser = _firebaseAuth.currentUser;
+    Map<String, dynamic> changeMap = {};
+    getUtenteLoggato().then((utente) {
+      for(var i=0; i<utente.iscrizioni.length; i++){
+        changeMap[i.toString()] = utente.iscrizioni[i];
+      }
+      var found = false;
+      var keyDaRimuovere;
+      changeMap.forEach((key, value) {
+        if(value==idCorso){
+          keyDaRimuovere = key;
+          found = true;
+        }
+      });
+      if(found) {
+        changeMap.remove(keyDaRimuovere);
+        Map<String, dynamic> tmpMap = Map();
+        int it = 0;
+        changeMap.forEach((key, value) {
+          tmpMap[it.toString()] = value;
+          it++;
+        });
+        changeMap = tmpMap;
+      }
+      else{
+        int id = 0;
+        changeMap.forEach((key, value) { id++; });
+        changeMap[id.toString()] = idCorso;
+      }
+      _database.child('Users').child(firebaseUser!.uid).child('iscrizioni').set(changeMap);
+    });
   }
 
   //funzione che prende tutte le diverse categorie esistenti nel database
