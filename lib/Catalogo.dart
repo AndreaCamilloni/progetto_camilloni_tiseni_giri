@@ -113,7 +113,7 @@ class _Catalogo extends State<Catalogo>{
                   child:Text("Top in " + listCategorie.elementAt(index-1), style: TextStyle(fontSize: 24))
               ),
               Container(
-                height:220.0,
+                height:200.0,
                 child:ListView(
                   scrollDirection: Axis.horizontal,
                   children: mapCorsi[listCategorie.elementAt(index-1)] != null ? mapCorsi[listCategorie.elementAt(index-1)]! : new List.empty()
