@@ -82,7 +82,6 @@ class DatabaseUtils {
           avg = sum/listaRecensioni.length;
         }
 
-        //print("media: " + "$avg " + "id_corso: " "${values['id']}");
         var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: listaRecensioni,avg:avg, docente: values["docente"] != null? values["docente"]:"Sconosciuto", prezzo: values["prezzo"] != null? values["prezzo"]: "Corso gratuito");
         listaCorsi.add(corso);
       }

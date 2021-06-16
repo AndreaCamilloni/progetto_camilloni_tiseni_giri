@@ -114,7 +114,6 @@ Future<List<Widget>> listPopolari() async {
   corsi.sort();
       for (Corso corso in corsi){
         cardCorsi.add(CardCorso(corso));
-        print("media: ${corso.avg}, id_corso ${corso.id}");
       }
       return cardCorsi.sublist(cardCorsi.indexOf(cardCorsi.first),cardCorsi.indexOf(cardCorsi.first)+5);
 }
