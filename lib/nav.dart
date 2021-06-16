@@ -21,10 +21,8 @@ class _NavState extends State<Nav> {
     Home(),
     Catalogo(),
     YourCourses(),
-    //InfoCorso(),
     YourCourses(),
     AreaUtente(),
-
     //Corsi(),
     //Wishlist(),
     //Profilo(),

@@ -46,9 +46,12 @@ class _Home extends State<Home>{
             Column(
               children:[
                 SizedBox(height: 20),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child:Text("Popolari", style: TextStyle(fontSize: 24))
+                Padding(
+                  padding:EdgeInsets.only(top:10, left:10, bottom:10),
+                  child:Align(
+                      alignment: Alignment.centerLeft,
+                      child:Text("Popolari", style: TextStyle(fontSize: 24))
+                  ),
                 ),
                 Container(
                 height:220.0,
@@ -63,9 +66,12 @@ class _Home extends State<Home>{
             Column(
               children:[
                 SizedBox(height: 20),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child:Text("Consigliati", style: TextStyle(fontSize: 24))
+                Padding(
+                  padding:EdgeInsets.only(top:10, left:10, bottom:10),
+                  child:Align(
+                      alignment: Alignment.centerLeft,
+                      child:Text("Consigliati", style: TextStyle(fontSize: 24))
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.only(top:10, left:10, bottom:10),
@@ -80,9 +86,12 @@ class _Home extends State<Home>{
             Column(
               children:[
                 SizedBox(height: 20),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child:Text("Aggiunti di Recente", style: TextStyle(fontSize: 24))
+                Padding(
+                  padding:EdgeInsets.only(top:10, left:10, bottom:10),
+                  child:Align(
+                      alignment: Alignment.centerLeft,
+                      child:Text("Aggiunti di Recente", style: TextStyle(fontSize: 24))
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.only(top:10, left:10, bottom:10),
@@ -123,7 +132,7 @@ Future<List<Widget>> listConsigliati() async {
 Future<List<Widget>> listAggiuntiRecente() async {
   List<Widget> cardCorsi = [];
   List<Corso> corsi = await DatabaseUtils.getListaCorsi();
-  List<Corso> ultimiCinque = corsi.sublist(corsi.indexOf(corsi.last)-4,corsi.indexOf(corsi.last)+1);
+  List<Corso> ultimiCinque = corsi.sublist(corsi.indexOf(corsi.last)-4,corsi.indexOf(corsi.last)+1).reversed.toList();
   for (Corso corso in ultimiCinque){
     cardCorsi.add(CardCorso(corso));
   }

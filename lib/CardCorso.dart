@@ -28,6 +28,7 @@ class _CardCorso extends State<CardCorso> {
         child:Card(
           clipBehavior: Clip.antiAlias,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Image.network(widget.corso.immagine,height:120, fit: BoxFit.fill),
             Padding(

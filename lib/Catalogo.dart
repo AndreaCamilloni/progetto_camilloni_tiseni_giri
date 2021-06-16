@@ -3,9 +3,12 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/CardCorso.dart';
+import 'package:progetto_camilloni_tiseni_giri/Categoria.dart';
+import 'package:progetto_camilloni_tiseni_giri/Ricerca.dart';
 import 'package:progetto_camilloni_tiseni_giri/database_utils.dart';
 
 import 'models/Corso.dart';
+import 'nav.dart';
 
 class Catalogo extends StatefulWidget{
 
@@ -35,7 +38,7 @@ class _Catalogo extends State<Catalogo>{
       });
     });
     nullable = (mapCorsi != null);
-    populateChips().then((chips){
+    populateChips(context).then((chips){
       setState(() {
         listOfChips1 = [];
         listOfChips2 = [];
@@ -69,10 +72,17 @@ class _Catalogo extends State<Catalogo>{
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    textInputAction: TextInputAction.search,
                     controller: searchBarController,
+                    onFieldSubmitted:(value){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return Ricerca(value);
+                      }));
+                    } ,
                     decoration: InputDecoration(
                       labelText: 'Cerca',
                       border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.search)
                     ),
                   ),
                 ),
@@ -121,7 +131,7 @@ class _Catalogo extends State<Catalogo>{
   }
 }
 //funzione che popola la lista di chip
-Future<List<Widget>> populateChips() async{
+Future<List<Widget>> populateChips(BuildContext context) async{
   List<Widget> chips = [];
 
   await DatabaseUtils.getAllCategories().then((categorie) {
@@ -132,6 +142,9 @@ Future<List<Widget>> populateChips() async{
           child: ActionChip(
             label: Text(categorie.elementAt(i)),
             onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Categoria(categorie.elementAt(i));
+              }));
               },
           ),
         ),
