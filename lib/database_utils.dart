@@ -72,10 +72,13 @@ class DatabaseUtils {
           });
         }
         //costruisco la somma degli elemnti della lista di recensioni
-        var sum= listaRecensioni.reduce((a,b) => a+b);
+        var sum = 0.0;
+        for(num recensione in listaRecensioni) {
+          sum+=recensione;
+        }
         //faccio la media
         var avg = sum/listaRecensioni.length;
-        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: listaRecensioni,avg:avg);
+        var corso = Corso(id: values["id"].toString(), categoria: values["categoria"], descrizione: values["descrizione"], dispense: listaDispense, immagine: values["immagine"], lezioni: listaLezioni, titolo: values["titolo"],recensioni: listaRecensioni,avg:avg, docente: values["docente"] != null? values["docente"]:"Sconosciuto", prezzo: values["prezzo"] != null? values["prezzo"]: "Corso gratuito");
         listaCorsi.add(corso);
       }
     });
@@ -116,7 +119,7 @@ class DatabaseUtils {
 
   //funzione che ritorna il corso di cui passo l'id
   static Future<Corso> getCorso(String id) async {
-    Corso corso = Corso(id: "", categoria: "", descrizione: "", dispense: [], immagine: "", lezioni: [], titolo: "", recensioni: [],avg:0.0);
+    Corso corso = Corso(id: "", categoria: "", descrizione: "", dispense: [], immagine: "", lezioni: [], titolo: "", recensioni: [],avg:0.0, docente: "", prezzo:"");
     await getListaCorsi().then((corsi){
       for (var c in corsi){
         if (c.id == id){

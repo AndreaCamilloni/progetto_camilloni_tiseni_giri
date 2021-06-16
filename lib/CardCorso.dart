@@ -21,7 +21,7 @@ class _CardCorso extends State<CardCorso> {
       child:GestureDetector(
         onTap:() {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return NavCorso();
+            return NavCorso(widget.corso);
           })
           );
         },

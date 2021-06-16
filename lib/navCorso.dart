@@ -6,24 +6,18 @@ import 'package:progetto_camilloni_tiseni_giri/Catalogo.dart';
 
 import 'InfoCorso.dart';
 import 'Lezioni.dart';
+import 'models/Corso.dart';
 
 class NavCorso extends StatefulWidget {
+  final Corso corso;
+  const NavCorso(this.corso);
   @override
   _NavCorsoState createState() => _NavCorsoState();
 }
 
 class _NavCorsoState extends State<NavCorso> {
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[
-    InfoCorso(),
-    Lezioni(),
-    Text("popo"),
-    //Dispense(),
 
-    //Corsi(),
-    //Wishlist(),
-    //Profilo(),
-  ];
 
   void _onItemTap(int index){
     setState((){
@@ -32,9 +26,18 @@ class _NavCorsoState extends State<NavCorso> {
   }
   @override
   Widget build(BuildContext context){
+    List<Widget> _widgetOptions = <Widget>[
+      InfoCorso(widget.corso),
+      Lezioni(),
+      Text("popo"),
+      //Dispense(),
+
+      //Corsi(),
+      //Wishlist(),
+      //Profilo(),
+    ];
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           title: Text('ProgettoFlutter'),
         ),
         body: Center(

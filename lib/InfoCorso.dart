@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'models/Corso.dart';
+
 class InfoCorso extends StatefulWidget {
+  final Corso corso;
+
+  const InfoCorso(this.corso);
   @override
   _InfoCorso createState() => _InfoCorso();
 
@@ -28,7 +33,7 @@ class _InfoCorso extends State<InfoCorso> {
                           child:Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "nomeCorso",
+                              widget.corso.titolo,
                               style: TextStyle(color: Colors.black.withOpacity(0.6),
                                   fontSize: 30),
                             ),
@@ -52,7 +57,7 @@ class _InfoCorso extends State<InfoCorso> {
                   child:Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                    "Categoria",
+                    widget.corso.categoria,
                     style: TextStyle(color: Colors.black.withOpacity(0.6),
                     fontSize: 18, fontWeight: FontWeight.bold),
                     ),
@@ -73,7 +78,7 @@ class _InfoCorso extends State<InfoCorso> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "La descrizione del corso",
+                          widget.corso.descrizione,
                           style: TextStyle(color: Colors.black.withOpacity(0.6),
                               fontSize: 18),
                         ),
@@ -96,7 +101,7 @@ class _InfoCorso extends State<InfoCorso> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "Il Docente del corso",
+                          widget.corso.docente,
                           style: TextStyle(color: Colors.black.withOpacity(0.6),
                               fontSize: 18),
                         ),
@@ -119,7 +124,7 @@ class _InfoCorso extends State<InfoCorso> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "30",
+                          widget.corso.lezioni.length.toString(),
                           style: TextStyle(color: Colors.black.withOpacity(0.6),
                               fontSize: 18),
                         ),
@@ -142,7 +147,7 @@ class _InfoCorso extends State<InfoCorso> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "150€",
+                          widget.corso.prezzo,
                           style: TextStyle(color: Colors.black.withOpacity(0.6),
                               fontSize: 18),
                         ),
