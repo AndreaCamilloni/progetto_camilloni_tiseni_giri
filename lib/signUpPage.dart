@@ -1,4 +1,4 @@
-/*Pagina di login*/
+/*Pagina di registrazione*/
 
 import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/signInPage.dart';
@@ -63,7 +63,7 @@ class SignUpPage extends StatelessWidget {
                 children:[
                   ElevatedButton(
                     onPressed: () {
-                      context.read<AuthenticationService>().signUp(
+                      context.read<AuthenticationService>().signUp( //richiama la classe AuthenticationService per utilizzarne la sua funzione di signup
                           emailController.text.trim(),
                           passwordController.text.trim(),
                           firstnameController.text.trim(),
@@ -76,7 +76,7 @@ class SignUpPage extends StatelessWidget {
                   SizedBox(width: 50),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
+                      Navigator.pushReplacement( //pushReplacement serve per non permettere di tornare indietro, perchè alle pagine di login e registrazione ci si va cliccando i bottoni corrispondenti
                         context,
                         MaterialPageRoute(
                             builder: (context) => SignInPage()),

@@ -1,3 +1,7 @@
+/*
+  Classe che imposta la bottom navigation bar per il singolo corso
+*/
+
 import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/YourCourses.dart';
 //import 'package:progetto_camilloni_tiseni_giri/prova.dart';

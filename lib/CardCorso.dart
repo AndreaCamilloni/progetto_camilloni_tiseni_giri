@@ -1,3 +1,7 @@
+/*
+  Classe per la definizione della card di un singolo corso
+ */
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'models/Corso.dart';
@@ -14,7 +18,7 @@ class CardCorso extends StatefulWidget{
 class _CardCorso extends State<CardCorso> {
   @override
 
-  //layout carta del corso per home catalogo i tuoi corsi categoria ecc..
+  //layout carta del corso per home catalogo, i tuoi corsi, categoria, ecc..
   Widget build(BuildContext context) {
     return Container(
       width:170,

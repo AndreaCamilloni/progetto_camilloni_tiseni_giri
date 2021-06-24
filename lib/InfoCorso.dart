@@ -19,13 +19,13 @@ class _InfoCorso extends State<InfoCorso> {
 
   initState(){
     DatabaseUtils.getUtenteLoggato().then((utente){
-      if(utente.iscrizioni.contains(widget.corso.id)){
+      if(utente.iscrizioni.contains(widget.corso.id)){ //se l'utente ha questo corso nelle iscrizioni mette la variabile _isIscritto a true
         setState(() {
           _isIscritto = true;
         });
       }
 
-      if(utente.wishlist.contains(widget.corso.id)){
+      if(utente.wishlist.contains(widget.corso.id)){ //se l'utente ha questo corso nella wishlist mette la variabile _IsFavorite a true
         setState(() {
           _isFavorite = true;
         });
@@ -63,7 +63,7 @@ class _InfoCorso extends State<InfoCorso> {
                           flex:1,
                           child:Align(
                               alignment: Alignment.centerLeft,
-                              child: IconButton(onPressed: () {
+                              child: IconButton(onPressed: () { //se premuta, chiama la funzione di update delle wishlist dell'utente e inverte il valore della variablie _isFavorite
                                   DatabaseUtils.updateWishlist(widget.corso.id);
                                   setState(() => _isFavorite = !_isFavorite);
                               },
@@ -179,7 +179,7 @@ class _InfoCorso extends State<InfoCorso> {
                 Padding(
                   padding:EdgeInsets.only(left:8.0,top:20.0,right:8.0,bottom: 20.0),
                   child:OutlinedButton(
-                    onPressed: () {
+                    onPressed: () { //se premuta, chiama la funzione di update delle iscrizioni dell'utente e inverte il valore della variablie _isFavorite
                       DatabaseUtils.updateIscrizioni(widget.corso.id);
                       setState(() => _isIscritto = !_isIscritto);
                     },

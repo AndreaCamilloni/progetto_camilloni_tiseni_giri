@@ -20,6 +20,7 @@ class _Lezioni extends State<Lezioni>{
       );
   }
 
+  //funzione che ritorna la lista delle lezioni del corso come widget
   List<Widget> getLezioni(Corso corso){
     List<Widget> listaLezioni = [];
     for(Lezione lezione in corso.lezioni) {

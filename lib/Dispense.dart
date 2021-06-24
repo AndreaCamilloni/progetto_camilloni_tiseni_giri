@@ -19,6 +19,7 @@ class _Dispense extends State<Dispense>{
     );
   }
 
+  //funzione che ritorna una lista dei widget di tutte le dispense del corso
   List<Widget> getDispense(Corso corso){
     List<Widget> listaDispense = [];
     for(Documento doc in corso.dispense) {
@@ -28,7 +29,7 @@ class _Dispense extends State<Dispense>{
             title: Text(doc.titolo, style: TextStyle(fontSize: 14)),
             tileColor: Colors.white54,
             onTap:(){
-                _launchURL(doc.url);
+                _launchURL(doc.url); //se cliccato, chiama la funzione che lancia l'url della risorsa su internet
             }
           )
         )
@@ -36,6 +37,8 @@ class _Dispense extends State<Dispense>{
     }
     return listaDispense;
   }
+
+  //funzione che lancia l'url del documento cliccato
   void _launchURL(String _url) async =>
       await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
 }

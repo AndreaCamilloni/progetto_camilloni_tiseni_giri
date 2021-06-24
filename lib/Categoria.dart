@@ -8,7 +8,7 @@ import 'models/Corso.dart';
 
 class Categoria extends StatefulWidget{
   final String categoria;
-  const Categoria(this.categoria);
+  const Categoria(this.categoria); //costruttore con parametro la categorie
   _Categoria createState() => _Categoria();
 }
 
@@ -17,9 +17,9 @@ class _Categoria extends State<Categoria>{
   List<Widget> corsiCat = [];
 
   @override
-  void initState() {
+  void initState() { //richiamato solo all'inizio, serve per settare lo stato iniziale
     super.initState();
-    drawCategoria(widget.categoria).then((cardsCategoria){
+    drawCategoria(widget.categoria).then((cardsCategoria){ //mette il risultato della funzione drawCategoria nella lista dei corsi della categoria cliccata nelle chips del catalogo
       setState(() {
         corsiCat = cardsCategoria;
       });
@@ -63,6 +63,7 @@ class _Categoria extends State<Categoria>{
   }
 }
 
+//funzione che ritorna la lista dei corsi della categoria specificiata come parametro
 Future<List<Widget>> drawCategoria(String categoria) async {
   List<Widget> cardCategoria = [];
   List<Corso> corsi = await DatabaseUtils.getListaCorsi();

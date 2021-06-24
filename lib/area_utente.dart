@@ -22,11 +22,11 @@ class _AreaUtente extends State<AreaUtente>{
   List<Widget> listOfChips1 = [];
   List<Widget> listOfChips2 = [];
 
-  initState() {
+  initState() { //richiamato solo all'inizio, serve per settare lo stato iniziale
     DatabaseUtils.getUtenteLoggato().then((utente){
       firstnameController.text = utente.firstName;
       lastnameController.text = utente.lastName;
-      populateChips(utente).then((chips){
+      populateChips(utente).then((chips){ //richiama la funzione che ritorna la lista di chips delle categorie
         setState(() {
         listOfChips1 = [];
         listOfChips2 = [];
@@ -102,14 +102,14 @@ class _AreaUtente extends State<AreaUtente>{
                   children:[
                     ElevatedButton(
                       onPressed: () {
-                        context.read<AuthenticationService>().signOut(context);
+                        context.read<AuthenticationService>().signOut(context); //richiama la classe AuthenticationService per utilizzarne il metodo di logout
                       },
                       child: Text("Logout"),
                     ),
                     SizedBox(width:50),
                     ElevatedButton(
                       onPressed: () {
-                        DatabaseUtils.updateUser(firstnameController.text, lastnameController.text, categoriePreferite);
+                        DatabaseUtils.updateUser(firstnameController.text, lastnameController.text, categoriePreferite); //chiama la funzione che aggiorna i dati dell'utente
                       },
                       child: Text("Salva le modifiche"),
                     ),
@@ -139,7 +139,7 @@ class _AreaUtente extends State<AreaUtente>{
               checked = true;
             }
           }
-        chips.add(filterChipWidget(categorie.elementAt(i), checked));
+        chips.add(filterChipWidget(categorie.elementAt(i), checked)); //aggiunge alla lista delle chips un nuovo elemento della filterChipWidget, passandogli il nome e il bool per capire se la chip deve essere checkata
       }
     }
     );
@@ -147,6 +147,7 @@ class _AreaUtente extends State<AreaUtente>{
   }
 }
 
+//classe per la strutturazione delle chips checkabili
 class filterChipWidget extends StatefulWidget{
   final String chipName;
   bool checked;
@@ -166,12 +167,12 @@ class _filterChipWidgetState extends State<filterChipWidget> {
       child: FilterChip(
         label: Text(widget.chipName),
         selected: widget.checked,
-        onSelected: (isSelected) {
+        onSelected: (isSelected) { //se viene selezionata, viene aggiunta la categoria corrispondente alla lista che tiene conto di tutte le categorie preferite dell'utente
           if(isSelected)
             categoriePreferite.add(widget.chipName);
           else
             categoriePreferite.remove(widget.chipName);
-          setState(() {
+          setState(() { //cambia la variabile checked per aggiornare lo stato della chip, in modo da visualizzare la spunta o meno dinamicamente
             widget.checked = isSelected;
           });
         },

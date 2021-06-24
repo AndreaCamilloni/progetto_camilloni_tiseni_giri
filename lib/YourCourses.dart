@@ -37,6 +37,7 @@ class _YourCourses extends State<YourCourses>{
   }
 }
 
+//funzione che ritorna la lista di corsi presenti nelle iscrizioni dell'utente
 Future<List<Widget>> drawIscrizioni() async {
   List<Widget> cardIscrizioni = [];
   List<Corso> iscrizioni = await DatabaseUtils.getIscrizioni();

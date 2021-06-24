@@ -19,19 +19,19 @@ class _Home extends State<Home>{
 
   //inizializza lo stato del widget
   @override
-  void initState() {
+  void initState() { //richiamato solo all'inizio, serve per settare lo stato iniziale
     super.initState();
-    listPopolari().then((cardCorsi){
+    listPopolari().then((cardCorsi){ //prende i corsi popolari e li mette tramite il setState nella lista dei popolari
       setState(() {
         popolari = cardCorsi;
       });
     });
-    listConsigliati().then((cardCorsi){
+    listConsigliati().then((cardCorsi){ //prende i corsi consigliati e li mette tramite il setState nella lista dei consigliati
       setState(() {
         consigliati = cardCorsi;
       });
     });
-    listAggiuntiRecente().then((cardCorsi){
+    listAggiuntiRecente().then((cardCorsi){ //prende i corsi aggiunti di recente e li mette tramite il setState nella lista dei recenti
       setState(() {
         recenti = cardCorsi;
       });
@@ -111,18 +111,18 @@ class _Home extends State<Home>{
 Future<List<Widget>> listPopolari() async {
   List<Widget> cardCorsi = [];
   List<Corso> corsi = await DatabaseUtils.getListaCorsi();
-  corsi.sort();
+  corsi.sort(); //la funzione sort è stata ridefinita in corso per ordinare in base a recensioni
       for (Corso corso in corsi){
         cardCorsi.add(CardCorso(corso));
       }
       return cardCorsi.sublist(cardCorsi.indexOf(cardCorsi.first),cardCorsi.indexOf(cardCorsi.first)+5);
 }
-//Funzione che disegna i corsi consigliati per l'utente in base alle categori preferite
+//Funzione che disegna i corsi consigliati per l'utente in base alle categorie preferite
 Future<List<Widget>> listConsigliati() async {
     List<Widget> cardCorsi = [];
     Utente currUser = await DatabaseUtils.getUtenteLoggato();
     List<Corso> corsi = await DatabaseUtils.getListaCorsi();
-    if(currUser.categoriePref.isEmpty){
+    if(currUser.categoriePref.isEmpty){ //se l'utente non ha categorie preferite mette nella lista tutti i corsi
       for (Corso corso in corsi){
         cardCorsi.add(CardCorso(corso));
       }
@@ -133,7 +133,7 @@ Future<List<Widget>> listConsigliati() async {
         cardCorsi.add(CardCorso(corso));
       }
     }
-    if(cardCorsi.length <= 5) {
+    if(cardCorsi.length <= 5) { //qua faccio in modo che la lista ritorno sia sempre minore o uguale a 5 elementi
       return cardCorsi;
     }
     else{
@@ -144,7 +144,7 @@ Future<List<Widget>> listConsigliati() async {
 Future<List<Widget>> listAggiuntiRecente() async {
   List<Widget> cardCorsi = [];
   List<Corso> corsi = await DatabaseUtils.getListaCorsi();
-  List<Corso> ultimiCinque = corsi.sublist(corsi.indexOf(corsi.last)-4,corsi.indexOf(corsi.last)+1).reversed.toList();
+  List<Corso> ultimiCinque = corsi.sublist(corsi.indexOf(corsi.last)-4,corsi.indexOf(corsi.last)+1).reversed.toList(); //prende i 5 corsi con gli ultimi 5 index
   for (Corso corso in ultimiCinque){
     cardCorsi.add(CardCorso(corso));
   }

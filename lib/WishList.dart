@@ -18,7 +18,7 @@ class _WishList extends State<WishList>{
   @override
   void initState() {
     super.initState();
-    drawWishList().then((cardWishList){
+    drawWishList().then((cardWishList){ //richiama la funzione che ritorna la lista di corsi e la mette nella wishlist
       setState(() {
         wishlist = cardWishList;
       });
@@ -37,6 +37,7 @@ class _WishList extends State<WishList>{
   }
 }
 
+//funzione che ritorna la lista di corsi che l'utente ha nella wishlist
 Future<List<Widget>> drawWishList() async {
   List<Widget> cardWishList = [];
   List<Corso> corsi = await DatabaseUtils.getListaCorsi();

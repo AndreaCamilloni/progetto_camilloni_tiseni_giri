@@ -17,26 +17,26 @@ class Catalogo extends StatefulWidget{
 }
 
 class _Catalogo extends State<Catalogo>{
-  final TextEditingController searchBarController = TextEditingController();
+  final TextEditingController searchBarController = TextEditingController(); //controller della search bar
 
   HashMap<String,List<Widget>> mapCorsi = HashMap<String,List<Widget>>();
   Set<String> listCategorie = Set();
   List<Widget> listOfChips1 = [];
   List<Widget> listOfChips2 = [];
 
-  initState() {
+  initState() { //richiamato solo all'inizio, serve per settare lo stato iniziale
 
     DatabaseUtils.getAllCategories().then((categorie){
       setState(() {
         listCategorie.addAll(categorie);
       });
     });
-    corsiByCat().then((corsiByCat){
+    corsiByCat().then((corsiByCat){ //richiama la funzione che crea una mappa di corsi in base alla loro categoria e la inserisce nella mapCorsi
       setState(() {
         mapCorsi.addAll(corsiByCat);
       });
     });
-    populateChips(context).then((chips){
+    populateChips(context).then((chips){ //qui si richiama la funzione che popola le chips dinamicamente in base alle varie categorie presenti nel db
       setState(() {
         listOfChips1 = [];
         listOfChips2 = [];
@@ -70,7 +70,7 @@ class _Catalogo extends State<Catalogo>{
                     textInputAction: TextInputAction.search,
                     controller: searchBarController,
                     onFieldSubmitted:(value){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) { //se submitto la query di ricerca mi manda alla pagina di ricerca passandogli la query come "value"
                         return Ricerca(value);
                       }));
                     } ,
@@ -136,7 +136,7 @@ Future<List<Widget>> populateChips(BuildContext context) async{
           padding: const EdgeInsets.all(2.0),
           child: ActionChip(
             label: Text(categorie.elementAt(i)),
-            onPressed: () {
+            onPressed: () { //se si preme su una categoria ti porta alla pagina dove visualizzare i corsi di quella categoria passandogli la categoria cliccata come parametro
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Categoria(categorie.elementAt(i));
               }));
@@ -163,7 +163,7 @@ Future<HashMap<String,List<Widget>>> corsiByCat() async {
         tmp.add(CardCorso(corso));
       }
     }
-    corsiByCat.putIfAbsent(categoria, () => tmp);
+    corsiByCat.putIfAbsent(categoria, () => tmp); // () => tmp sarebbe una funzione vuota che ritorna tmp, non metto direttamente tmp perchè putIfAbsent richiede una funzione come secondo parametro
   }
   return corsiByCat;
 }

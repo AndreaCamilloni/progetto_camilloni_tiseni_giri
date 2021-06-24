@@ -19,20 +19,17 @@ class Nav extends StatefulWidget {
 }
 
 class _NavState extends State<Nav> {
-  int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    Catalogo(),
-    YourCourses(),
-    WishList(),
-    AreaUtente(),
-    //Corsi(),
-    //Wishlist(),
-    //Profilo(),
+  int _selectedIndex = 0; //l'indice selezionato è inizializzato con quello della homepage
+  List<Widget> _widgetOptions = <Widget>[ //rotte della navbar
+    Home(), //rotta dell' homepage dell'applicazione
+    Catalogo(), //rotta del catalogo dei corsi
+    YourCourses(), //rotta dei corsi a cui l'utente è iscritto
+    WishList(), //rotta della wishlist
+    AreaUtente(), //rotta dell'area utente
   ];
 
-  void _onItemTap(int index){
-    setState((){
+  void _onItemTap(int index){ //funzione attivata quando clicco su un elemento della bottom navigation bar, tramite il setState cambio il valore dell'index selezionato
+    setState((){ //la funzione setState notifica il framework che lo stato interno dell'oggetto viene cambiato
       _selectedIndex = index;
     });
   }

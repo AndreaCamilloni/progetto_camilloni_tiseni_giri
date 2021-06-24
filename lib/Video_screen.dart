@@ -1,4 +1,6 @@
-//classe che implementa lo scrren per i video
+/*
+  Classe che implementa lo screen per i video, utilizza il package youtube_player_iframe
+ */
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

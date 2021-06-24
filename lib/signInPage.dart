@@ -45,7 +45,7 @@ class SignInPage extends StatelessWidget {
             children:[
               ElevatedButton(
                 onPressed: () {
-                  context.read<AuthenticationService>().signIn(
+                  context.read<AuthenticationService>().signIn( //richiama la classe AuthenticationService per utilizzarne il metodo signIn
                       emailController.text.trim(),
                       passwordController.text.trim(),
                       context

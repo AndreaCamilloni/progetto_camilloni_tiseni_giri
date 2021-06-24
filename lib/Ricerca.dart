@@ -1,3 +1,7 @@
+/*
+Classe della pagina della ricerca, attivata quando submitto una query sulla form di ricerca
+ */
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_camilloni_tiseni_giri/CardCorso.dart';
@@ -17,9 +21,9 @@ class _Ricerca extends State<Ricerca>{
   List<Widget> corsiSearch = [];
 
   @override
-  void initState() {
+  void initState() { //richiamato solo all'inizio, serve per settare lo stato iniziale
     super.initState();
-    drawSearch(widget.query).then((cardsSearch){
+    drawSearch(widget.query).then((cardsSearch){ //mette all'interno della lista dei corsi il risultato di drawSearch
       setState(() {
         corsiSearch = cardsSearch;
       });
@@ -61,6 +65,7 @@ class _Ricerca extends State<Ricerca>{
   }
 }
 
+//funzione che elabora la query e ritorna i corsi che rispettano il suo contenuto
 Future<List<Widget>> drawSearch(String query) async {
   List<Widget> cardSearch = [];
   List<Corso> corsi = await DatabaseUtils.getListaCorsi();

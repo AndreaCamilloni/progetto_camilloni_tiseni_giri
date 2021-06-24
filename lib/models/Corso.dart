@@ -31,6 +31,7 @@ class Corso implements Comparable{
   String docente;
   String prezzo;
 
+  //override della funzione compareTo per fare il confronto tra i corsi in base alla media delle recensioni. QUesta funzione viene usata nel sort nella homepage
   @override
   int compareTo(other) {
     if(this.avg < other.avg){

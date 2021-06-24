@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 import 'dart:developer';
 import 'authentication_service.dart';
 
-Future<void> main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+Future<void> main() async{ //il main è una funziona asincrona, lo è perchè almeno si può utilizzare il metodo await sull'intializeApp di firebase
+  WidgetsFlutterBinding.ensureInitialized(); //questa funzione si assicura che sia stata creata un'istanza di WidgetsFlutterBinding, se non è stata istanziata la istanzia
+  await Firebase.initializeApp(); //crea e inizializza un'istanza dell'app Firebase
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]) //blocca l'orientamento del dispositivo
       .then((_) {
     runApp(MyApp());
   });
@@ -21,18 +21,18 @@ Future<void> main() async{
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
+    return MultiProvider( //serve per utilizzare più di un provider
+      providers: [ //i providers sono i providers di autenticazione
         Provider<AuthenticationService>(
             create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
-        StreamProvider(
+        StreamProvider( // è un providere che ascolta uno Stream e espone il suo contenuto ai figli e discendenti
         create: (context) => context.read<AuthenticationService>().authStateChanges, initialData: null,
         ),
       ],
       child: MaterialApp(
         title: 'Progetto Flutter',
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false, //toglie il debug banner
         home: AuthenticationWrapper(),
       ),
     );
